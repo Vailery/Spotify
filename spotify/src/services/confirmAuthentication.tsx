@@ -10,10 +10,13 @@ export const ConfirmAuthentication = () => {
     const params = location.hash
       .substring(1)
       .split("&")
-      .reduce((prev: any, curr: string) => {
-        let parts = curr.split("=");
-        prev[parts[0]] = decodeURIComponent(parts[1]);
-        return prev;
+      .reduce((prev: { [key: string]: string }, curr: string) => {
+        const [firstPart, secondPart] = curr.split("=");
+
+        return {
+          ...prev,
+          [firstPart]: decodeURIComponent(secondPart),
+        };
       }, {});
 
     const token = params.access_token;

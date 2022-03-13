@@ -1,5 +1,5 @@
 export const getSpotifyAuthURL = () => {
-  const authURL = "https://accounts.spotify.com/authorize";
+  const authURL = process.env.REACT_APP_AUTHORIZATION_URL;
   const clientID = process.env.REACT_APP_CLIENT_ID;
   const redirectURL = process.env.REACT_APP_CALLBACK_URL;
   const scopes = [
@@ -21,10 +21,10 @@ export const getSpotifyAuthURL = () => {
 
 export const setSession = (
   accessToken: string,
-  tokenLifetime: number,
+  tokenLifetime: string,
   callback: () => void
 ) => {
-  const expiresIn = Date.now() + tokenLifetime * 1000;
+  const expiresIn = Date.now() + +tokenLifetime * 1000;
   const authority = JSON.stringify({ accessToken, expiresIn });
 
   localStorage.setItem("authority", authority);
@@ -32,7 +32,7 @@ export const setSession = (
   callback();
 };
 
-export const isLogged = () => {
+export const checkIsLogged = () => {
   const storedAuthority = localStorage.getItem("authority");
   if (!storedAuthority) return false;
 
