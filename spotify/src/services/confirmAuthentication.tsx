@@ -21,7 +21,7 @@ export const ConfirmAuthentication = () => {
 
     const token = params.access_token;
     const tokenLifetime = params.expires_in;
-    const redirect = () => history.push("/home");
+    const redirect = () => history.push("/application");
 
     setSession(token, tokenLifetime, redirect);
   }, [history, location]);
