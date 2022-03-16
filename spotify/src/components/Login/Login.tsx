@@ -9,7 +9,7 @@ const loginURL = getSpotifyAuthURL();
 
 export const Login = () => {
   return checkIsLogged() ? (
-    <Redirect to={{ pathname: "/application" }} />
+    <Redirect to="/application" />
   ) : (
     <div className={styles.login}>
       <img
