@@ -40,3 +40,11 @@ export const checkIsLogged = () => {
 
   return authority.expiresIn > Date.now();
 };
+
+export const getToken = () => {
+  const authority = JSON.parse(localStorage.getItem("authority") || "{}");
+
+  const accessToken = authority.accessToken;
+
+  return accessToken;
+};
