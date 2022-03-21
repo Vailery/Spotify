@@ -32,7 +32,11 @@ export const Header = () => {
           </div>
 
           <NavLink to="#" className={styles.headerButton}>
-            <img src="/assets/img/notification.svg" alt="arrow" />
+            <img src="/assets/img/notification.svg" alt="notification" />
+          </NavLink>
+
+          <NavLink to="#" className={styles.headerButton}>
+            <img src="/assets/img/sun.svg" alt="sun" />
           </NavLink>
         </div>
       </div>
