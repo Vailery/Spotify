@@ -31,7 +31,14 @@ export const Menu = ({ title, svg, list }: IMenuState) => {
         {list &&
           list.map((item) => (
             <li key={item.id + item.title}>
-              <NavLink to="#" activeClassName={styles.active}>
+              <NavLink
+                to={{
+                  pathname: `/application/${item.title
+                    .toLocaleLowerCase()
+                    .replace(/\s/g, "_")}`,
+                }}
+                activeClassName={styles.active}
+              >
                 <img src={item.img} alt={item.title} />
                 <span>{item.title}</span>
               </NavLink>
