@@ -1,0 +1,118 @@
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.mainTrack {
+  padding-right: 8px;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0 16px 8px;
+  cursor: pointer;
+}
+
+.mainTrack:first-of-type {
+  padding-top: 0;
+}
+
+.mainTrack:last-of-type {
+  padding-bottom: 0;
+}
+
+.mainTrack:last-of-type .border {
+  display: none;
+}
+
+.mainInfo {
+  display: flex;
+  align-items: center;
+}
+
+.number,
+.title,
+.artists,
+.duration {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: #ffffff;
+}
+
+.playButton {
+  position: relative;
+  margin-right: 32px;
+}
+
+.playButton .play {
+  position: absolute;
+  filter: invert(1);
+  top: -1px;
+  left: -7px;
+  display: none;
+}
+
+.album {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+}
+
+.title {
+  margin-left: 16px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+}
+
+.artists {
+  margin-right: 70px;
+}
+
+.duration {
+  margin: 0 62px 0 12px;
+}
+
+.clock,
+.like,
+.dots {
+  filter: invert(1);
+}
+
+.dots {
+  margin-left: 60px;
+}
+
+.border {
+  height: 1px;
+  border-top: 1px solid #4d4d4d;
+  margin-left: 48px;
+}
+
+.track:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.12) 35.43%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.track:hover .number {
+  visibility: hidden;
+}
+
+.track:hover .play {
+  display: block;
+}
+
+.like {
+  filter: sepia(100%) saturate(2000%) hue-rotate(100deg) brightness(1);
+}
