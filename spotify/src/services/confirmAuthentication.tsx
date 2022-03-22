@@ -2,7 +2,11 @@ import { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { setSession } from "./authentication";
 
-export const ConfirmAuthentication = () => {
+export const ConfirmAuthentication = ({
+  callback,
+}: {
+  callback: (isLogged: boolean) => void;
+}) => {
   const location = useLocation();
   const history = useHistory();
 
@@ -21,10 +25,13 @@ export const ConfirmAuthentication = () => {
 
     const token = params.access_token;
     const tokenLifetime = params.expires_in;
-    const redirect = () => history.push("/home");
+    const redirect = () => {
+      callback(true);
+      history.push("/application");
+    };
 
     setSession(token, tokenLifetime, redirect);
-  }, [history, location]);
+  }, []);
 
   return <></>;
 };

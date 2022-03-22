@@ -1,12 +1,15 @@
 import { Redirect } from "react-router-dom";
-import { checkIsLogged, getSpotifyAuthURL } from "../services/authentication";
+import {
+  checkIsLogged,
+  getSpotifyAuthURL,
+} from "../../services/authentication";
 import styles from "./Login.module.css";
 
 const loginURL = getSpotifyAuthURL();
 
 export const Login = () => {
   return checkIsLogged() ? (
-    <Redirect to={{ pathname: "/home" }} />
+    <Redirect to="/application" />
   ) : (
     <div className={styles.login}>
       <img
