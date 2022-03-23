@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePalette } from "react-palette";
+import { usePlayer } from "../../services/player";
 import { ITrack } from "../../services/track";
 import { IUserInfo } from "../../services/userApi";
 import { getUserTracksLibrary } from "../../services/userPlaylist";
@@ -13,6 +14,8 @@ interface IProps {
 }
 
 export const Home = ({ user }: IProps) => {
+  const { playTrack, playerStatus, currentTrack, queue, replaceQueue } =
+    usePlayer();
   const { data } = usePalette(user.avatarUrl);
   const [tracks, setTracks] = useState<ITrack[]>([]);
 
@@ -26,6 +29,23 @@ export const Home = ({ user }: IProps) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const isTracksInQueue = useMemo(
+    () =>
+      tracks.every((track) => queue?.some((value) => value.id === track.id)) ??
+      false,
+    [tracks, queue]
+  );
+
+  const playPauseClick = () => {
+    if (!isTracksInQueue) {
+      replaceQueue(tracks);
+      console.log(tracks);
+    }
+
+    const trackToPlay = isTracksInQueue ? currentTrack : tracks[0];
+    playTrack(trackToPlay!);
   };
 
   useEffect(() => {
@@ -53,17 +73,23 @@ export const Home = ({ user }: IProps) => {
             <img src="/assets/img/headphone.svg" alt="headphone" />
             <span>n</span> subscriptions
           </p>
+
+          <button className={styles.playButton} onClick={playPauseClick}>
+            Play
+          </button>
         </div>
       </Banner>
 
-      <Title
-        textTitle="Favorite Songs"
-        textButton="See All"
-        onClick={() => {}}
-      />
+      <div className={styles.main}>
+        <Title
+          textTitle="Favorite Songs"
+          textButton="See All"
+          onClick={() => {}}
+        />
 
-      <div className={styles.playlist}>
-        <MainPlayList tracks={tracks} />
+        <div className={styles.playlist}>
+          <MainPlayList tracks={tracks} />
+        </div>
       </div>
     </div>
   );

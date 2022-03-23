@@ -6,6 +6,7 @@ import { Home } from "../components/Home/Home";
 import { LeftMenu } from "../components/LeftMenu/LeftMenu";
 import { Player } from "../components/Player/Player";
 import { RightMenu } from "../components/RightMenu/RightMenu";
+import { PlayerProvider } from "../services/player";
 import { getCurrentUser, IUserInfo } from "../services/userApi";
 import styles from "./Application.module.css";
 
@@ -21,26 +22,28 @@ export const Application = () => {
   return user !== undefined ? (
     <div className={styles.app}>
       <BrowserRouter>
-        <LeftMenu />
-        <div className={styles.main}>
-          <Header />
-          <Switch>
-            <Route path="/application/" exact>
-              <Home user={user} />
-            </Route>
-            <Route path="/application/home" exact>
-              <Home user={user} />
-            </Route>
-            <Route
-              path="/application/favorite_songs"
-              exact
-              component={FavoriteSongs}
-            />
-          </Switch>
-        </div>
-        <RightMenu user={user} />
+        <PlayerProvider>
+          <LeftMenu />
+          <div className={styles.main}>
+            <Header />
+            <Switch>
+              <Route path="/application/" exact>
+                <Home user={user} />
+              </Route>
+              <Route path="/application/home" exact>
+                <Home user={user} />
+              </Route>
+              <Route
+                path="/application/favorite_songs"
+                exact
+                component={FavoriteSongs}
+              />
+            </Switch>
+          </div>
+          <RightMenu user={user} />
 
-        <Player />
+          <Player />
+        </PlayerProvider>
       </BrowserRouter>
     </div>
   ) : (

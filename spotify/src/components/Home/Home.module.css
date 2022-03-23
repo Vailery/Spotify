@@ -1,4 +1,6 @@
 .home {
+  position: relative;
+  height: 90vh;
   background-color: #121212;
   padding: 32px;
 }
@@ -54,12 +56,36 @@
   font-weight: 600;
 }
 
+.playButton {
+  background: #1db954;
+  border-radius: 40px;
+  border: 0;
+  margin-top: 32px;
+  padding: 12px 24px;
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
 .photo img {
   border-radius: 50%;
   margin: 0 10px;
   transform: scale(0.9);
 }
 
+.main {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  height: 100%;
+  position: relative;
+}
+
 .playlist {
-  margin: 20px 0 32px;
+  margin-bottom: 32px;
 }
