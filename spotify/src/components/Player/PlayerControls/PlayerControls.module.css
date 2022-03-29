@@ -1,0 +1,35 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main img {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+.shuffle {
+  margin-right: 24px;
+}
+
+.repeate {
+  margin-left: 24px;
+}
+
+.controls {
+  display: flex;
+  padding: 12px;
+  background: linear-gradient(
+    222.22deg,
+    #ffffff 12.65%,
+    rgba(255, 255, 255, 0) 216.78%
+  );
+  border-radius: 40px;
+  margin: 0 24px;
+  cursor: pointer;
+}
+
+.controls .pause {
+  filter: invert(0);
+}

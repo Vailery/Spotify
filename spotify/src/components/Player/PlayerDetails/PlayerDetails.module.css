@@ -1,0 +1,40 @@
+.main {
+  display: flex;
+  align-items: center;
+}
+
+.cover {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+}
+
+.title {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 25px;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.artist {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.like {
+  margin-left: 32px;
+  filter: invert(1);
+}

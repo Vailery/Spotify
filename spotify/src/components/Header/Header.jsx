@@ -1,14 +1,21 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import styles from "./Header.module.css";
 
 export const Header = () => {
+  const history = useHistory();
+
   return (
     <div className={styles.header}>
       <div className={styles.headerContainer}>
         <div className={styles.headerNav}>
-          <NavLink to="#" className={styles.headerButton}>
+          <div
+            onClick={() => {
+              history.goBack();
+            }}
+            className={styles.headerButton}
+          >
             <img src="/assets/img/arrow.svg" alt="arrow" />
-          </NavLink>
+          </div>
 
           <div className={styles.navigation}>
             <span className={styles.prevLink}>Home</span>
@@ -32,7 +39,11 @@ export const Header = () => {
           </div>
 
           <NavLink to="#" className={styles.headerButton}>
-            <img src="/assets/img/notification.svg" alt="arrow" />
+            <img src="/assets/img/notification.svg" alt="notification" />
+          </NavLink>
+
+          <NavLink to="#" className={styles.headerButton}>
+            <img src="/assets/img/sun.svg" alt="sun" />
           </NavLink>
         </div>
       </div>

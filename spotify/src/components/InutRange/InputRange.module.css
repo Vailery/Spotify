@@ -1,0 +1,8 @@
+.volume {
+  margin: 0 32px 0 12px;
+  width: 99px;
+  height: 4px;
+  background: #ffffff;
+  border-radius: 16px;
+  cursor: pointer;
+}

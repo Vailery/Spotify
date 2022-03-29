@@ -59,7 +59,7 @@
   margin-left: 16px;
 }
 
-.menu ul li::before {
+.menu ul li a::before {
   content: "";
   position: absolute;
   top: 0;
@@ -70,7 +70,8 @@
   border-radius: 3px 0px 0px 3px;
 }
 
-.menu ul li:hover {
+.menu ul li:hover,
+.menu ul li a:is(.active) {
   background: linear-gradient(
     270deg,
     rgba(255, 255, 255, 0.06) 0%,
@@ -78,7 +79,8 @@
   );
 }
 
-.menu ul li:hover a span {
+.menu ul li:hover a span,
+.menu ul li a.active span {
   font-weight: 600;
   font-size: 16px;
   line-height: 22px;
@@ -86,7 +88,12 @@
   transition: 0.3s;
 }
 
-.menu ul li:hover::before {
+.menu ul li a:hover::before {
+  width: 6px;
+  transition: width 0.5s;
+}
+
+.menu ul li a:is(.active)::before {
   width: 6px;
   transition: width 0.5s;
 }
