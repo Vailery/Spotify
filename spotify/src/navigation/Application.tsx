@@ -34,6 +34,11 @@ export const Application = () => {
                 <Home user={user} />
               </Route>
               <Route
+                path="/application/home/favorite_songs"
+                exact
+                component={FavoriteSongs}
+              />
+              <Route
                 path="/application/favorite_songs"
                 exact
                 component={FavoriteSongs}

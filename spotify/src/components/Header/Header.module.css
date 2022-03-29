@@ -43,6 +43,10 @@
   margin-left: 24px;
 }
 
+.navigation .mainLink {
+  display: flex;
+}
+
 .navigation .prevLink {
   font-family: "Manrope";
   font-style: normal;

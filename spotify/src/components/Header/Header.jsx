@@ -1,8 +1,30 @@
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 
 export const Header = () => {
+  const [navigation, setNavigation] = useState("");
   const history = useHistory();
+  const location = useLocation();
+  console.log(history);
+
+  const from = "/application/".length;
+
+  useEffect(() => {
+    const navigation = location.pathname
+      .substring(from)
+      .replaceAll("_", " ")
+      .replaceAll("/", " / ")
+      .split(/\s+/)
+      .map((value) => {
+        return value.trim().length !== 0
+          ? value[0].toUpperCase() + value.substring(1)
+          : "";
+      })
+      .join(" ");
+
+    setNavigation(navigation);
+  }, [location]);
 
   return (
     <div className={styles.header}>
@@ -18,9 +40,29 @@ export const Header = () => {
           </div>
 
           <div className={styles.navigation}>
-            <span className={styles.prevLink}>Home</span>
-            <img src="/assets/img/small-arrow.svg" alt="arrow-revert" />
-            <span className={styles.currLink}>Popular Artist</span>
+            {navigation ? (
+              navigation.split("/").map((item, index, array) => {
+                if (index === array.length - 1) {
+                  return (
+                    <span key={item} className={styles.currLink}>
+                      {item}
+                    </span>
+                  );
+                } else {
+                  return (
+                    <div className={styles.mainLink} key={item}>
+                      <span className={styles.prevLink}>{item}</span>{" "}
+                      <img
+                        src="/assets/img/small-arrow.svg"
+                        alt="arrow-revert"
+                      />
+                    </div>
+                  );
+                }
+              })
+            ) : (
+              <span className={styles.currLink}>Main</span>
+            )}
           </div>
         </div>
 
