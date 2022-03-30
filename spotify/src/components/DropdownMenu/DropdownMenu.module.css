@@ -1,0 +1,116 @@
+.main {
+  position: relative;
+}
+
+.mainInfo {
+  display: flex;
+  justify-content: space-between;
+  margin: 32px 32px 0;
+  cursor: pointer;
+}
+
+.mainInfo .more {
+  filter: invert(1);
+  margin-left: 21px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.more.active {
+  transform: rotate(270deg);
+}
+
+.more.inactive {
+  transform: rotate(90deg);
+}
+
+.userInfo {
+  display: flex;
+  position: relative;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.userStatus {
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+}
+
+.name {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #ffffff;
+  margin: 4px 0;
+}
+
+.status {
+  display: flex;
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.status span {
+  margin: 0 4px;
+}
+
+.status img {
+  width: 16px;
+  height: 16px;
+}
+
+.menu {
+  background: #121212;
+  border-radius: 8px;
+  position: absolute;
+  top: 60px;
+  right: 15px;
+  width: 200px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+}
+
+.menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li p {
+  text-decoration: none;
+  display: block;
+  padding: 15px 20px;
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  color: #ffffff;
+  white-space: nowrap;
+  cursor: pointer;
+}
