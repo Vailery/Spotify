@@ -48,3 +48,9 @@ export const getToken = () => {
 
   return accessToken;
 };
+
+export const clearSession = (callback: () => void) => {
+  localStorage.removeItem("authority");
+
+  callback();
+};

@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { SessionError } from "../components/Error/SessionError";
 import { FavoriteSongs } from "../components/FavoriteSongs/FavoriteSongs";
 import { Header } from "../components/Header/Header";
 import { Home } from "../components/Home/Home";
@@ -13,11 +14,18 @@ import styles from "./Application.module.css";
 
 export const Application = () => {
   const [user, setUser] = useState<IUserInfo>();
+  const [error, setError] = useState<ReactNode>();
 
   useEffect(() => {
     getCurrentUser()
       .then((user) => setUser(user))
       .catch((err) => console.error(err.message));
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setError(<SessionError />);
+    }, 5000);
   }, []);
 
   return user !== undefined ? (
@@ -53,6 +61,9 @@ export const Application = () => {
       </BrowserRouter>
     </div>
   ) : (
-    <Loader />
+    <>
+      <Loader />
+      {error}
+    </>
   );
 };

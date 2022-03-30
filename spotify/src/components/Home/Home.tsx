@@ -5,6 +5,7 @@ import { ITrack } from "../../services/track";
 import { IUserInfo } from "../../services/userApi";
 import { getUserTracksLibrary } from "../../services/userPlaylist";
 import { Banner } from "../Banner/Banner";
+import { Button } from "../Button/Button";
 import { MainPlayList } from "../MainPlayList/MainPlayList";
 import { Title } from "../Title/Title";
 import styles from "./Home.module.css";
@@ -74,9 +75,7 @@ export const Home = ({ user }: IProps) => {
             <span>n</span> subscriptions
           </p>
 
-          <button className={styles.playButton} onClick={playPauseClick}>
-            Play
-          </button>
+          <Button text="Play" onClick={playPauseClick} />
         </div>
       </Banner>
 
