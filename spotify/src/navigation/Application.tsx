@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Error } from "../components/Error/Error";
 import { SessionError } from "../components/Error/SessionError";
 import { FavoriteSongs } from "../components/FavoriteSongs/FavoriteSongs";
 import { Header } from "../components/Header/Header";
@@ -52,6 +53,7 @@ export const Application = () => {
                 exact
                 component={FavoriteSongs}
               />
+              <Route path="*" component={Error} />
             </Switch>
           </div>
           <RightMenu user={user} />

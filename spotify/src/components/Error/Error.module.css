@@ -7,7 +7,8 @@
   flex-direction: column;
 }
 
-.mainSessionError p {
+.mainSessionError p,
+.main p {
   font-family: "Manrope";
   font-style: normal;
   font-weight: 600;
@@ -15,4 +16,22 @@
   line-height: 19px;
   color: #ffffff;
   white-space: nowrap;
+}
+
+.main {
+  background: #121212;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main p span {
+  color: #1db954;
+  font-style: italic;
+}
+
+.image {
+  width: 50%;
+  height: 50%;
 }
