@@ -4,6 +4,7 @@ import { FavoriteSongs } from "../components/FavoriteSongs/FavoriteSongs";
 import { Header } from "../components/Header/Header";
 import { Home } from "../components/Home/Home";
 import { LeftMenu } from "../components/LeftMenu/LeftMenu";
+import { Loader } from "../components/Loader/Loader";
 import { Player } from "../components/Player/Player";
 import { RightMenu } from "../components/RightMenu/RightMenu";
 import { PlayerProvider } from "../services/player";
@@ -52,6 +53,6 @@ export const Application = () => {
       </BrowserRouter>
     </div>
   ) : (
-    <p>error</p>
+    <Loader />
   );
 };
