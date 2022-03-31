@@ -8,20 +8,22 @@ export const Player = () => {
   const { currentTrack } = usePlayer();
 
   return (
-    <div className={styles.player}>
+    <>
       {currentTrack ? (
-        <PlayerDetails
-          isLiked={false}
-          artist={currentTrack.artists[0].name}
-          cover={currentTrack.albumCover}
-          title={currentTrack.title}
-        />
+        <div className={styles.player}>
+          <PlayerDetails
+            isLiked={false}
+            artist={currentTrack.artists[0].name}
+            cover={currentTrack.albumCover}
+            title={currentTrack.title}
+          />
+
+          <PlayerControls />
+          <TrackControls />
+        </div>
       ) : (
         <></>
       )}
-
-      <PlayerControls />
-      <TrackControls />
-    </div>
+    </>
   );
 };

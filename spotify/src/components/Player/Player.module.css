@@ -10,4 +10,15 @@
 
   display: flex;
   justify-content: space-between;
+
+  animation: 1s show;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100%;
+  }
 }

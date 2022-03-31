@@ -2,7 +2,21 @@
   margin: 0 32px 0 12px;
   width: 99px;
   height: 4px;
-  background: #ffffff;
+  backdrop-filter: blur(74px);
   border-radius: 16px;
   cursor: pointer;
+  border: 0;
+  outline: none;
+  transition: background 450ms ease-in;
+  -webkit-appearance: none;
+}
+
+.volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: #ffffff;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
 }

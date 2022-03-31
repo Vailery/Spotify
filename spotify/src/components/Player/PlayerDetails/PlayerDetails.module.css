@@ -1,6 +1,7 @@
 .main {
   display: flex;
   align-items: center;
+  flex: 1;
 }
 
 .cover {
@@ -36,5 +37,14 @@
 
 .like {
   margin-left: 32px;
+  cursor: pointer;
+}
+
+.like.active,
+.like.inactive:hover {
+  filter: sepia(100%) saturate(2000%) hue-rotate(100deg) brightness(1);
+}
+
+.like.inactive {
   filter: invert(1);
 }
