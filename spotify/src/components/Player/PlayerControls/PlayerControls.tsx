@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { PlayerStatus } from "../../../constants/player-status";
 import { usePlayer } from "../../../services/player";
 import styles from "./PlayerControls.module.css";

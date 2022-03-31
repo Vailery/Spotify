@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { usePalette } from "react-palette";
+import { PlayerStatus } from "../../constants/player-status";
 import { usePlayer } from "../../services/player";
 import { ITrack } from "../../services/track";
 import { IUserInfo } from "../../services/userApi";
@@ -45,9 +46,16 @@ export const Home = ({ user }: IProps) => {
       console.log(tracks);
     }
 
-    const trackToPlay = isTracksInQueue ? currentTrack : tracks[0];
+    const newTracks = tracks.filter((track) => track.sourceUrl !== null);
+    const trackToPlay = isTracksInQueue ? currentTrack : newTracks[0];
+
     playTrack(trackToPlay!);
   };
+
+  const text =
+    !isTracksInQueue || playerStatus !== PlayerStatus.PLAYING
+      ? "Play"
+      : "Pause";
 
   useEffect(() => {
     loadLibrary();
@@ -75,7 +83,7 @@ export const Home = ({ user }: IProps) => {
             <span>n</span> subscriptions
           </p>
 
-          <Button text="Play" onClick={playPauseClick} />
+          <Button text={text} onClick={playPauseClick} />
         </div>
       </Banner>
 

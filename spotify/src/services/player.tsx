@@ -71,10 +71,13 @@ export const PlayerProvider = ({ children }: IProps) => {
 
   const replaceQueue = useCallback(
     (tracks: ITrack[]) => {
-      setQueue(tracks);
+      const newTracks = tracks.filter((track) => track.sourceUrl !== null);
+      console.log(newTracks);
+
+      setQueue(newTracks);
 
       if (isShuffleActive) {
-        setShuffledQueue(shuffle(tracks));
+        setShuffledQueue(shuffle(newTracks));
       }
     },
     [isShuffleActive]
