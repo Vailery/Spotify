@@ -121,8 +121,29 @@
   filter: invert(1);
 }
 
-.dots {
+.details {
+  position: relative;
+}
+
+.details .dots {
   margin-left: 60px;
+}
+
+.details p {
+  position: absolute;
+  top: 0;
+  right: 0;
+  white-space: nowrap;
+  transform: translateY(-100%);
+  transition: all 0.3s ease;
+  opacity: 0;
+  background: #212121;
+  padding: 10px;
+  border-radius: 16px 16px 0 16px;
+}
+
+.details .dots:hover + p {
+  opacity: 1;
 }
 
 .border {
@@ -133,4 +154,15 @@
 
 .like {
   filter: sepia(100%) saturate(2000%) hue-rotate(100deg) brightness(1);
+}
+
+.blockApp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(18, 18, 18, 0.719);
+  z-index: 4;
+  pointer-events: none;
 }

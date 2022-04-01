@@ -3,6 +3,7 @@
   height: 90vh;
   background-color: #121212;
   padding: 32px;
+  z-index: 4;
 }
 
 .mainInfo {
@@ -51,9 +52,9 @@
 }
 
 .subscriptions span {
-  margin-left: 12px;
   color: #ffffff;
   font-weight: 600;
+  margin: 0 5px 0 12px;
 }
 
 .photo {
@@ -67,6 +68,7 @@
   margin: 0 10px;
   width: auto;
   height: 100%;
+  box-shadow: 0 4px 60px rgb(0 0 0 / 50%);
 }
 
 .main {
@@ -74,9 +76,14 @@
   flex-direction: column;
   overflow: scroll;
   height: 100%;
-  position: relative;
+  position: sticky;
+  top: 0;
 }
 
 .playlist {
   margin-bottom: 32px;
+}
+
+.subscr {
+  margin-bottom: 30%;
 }

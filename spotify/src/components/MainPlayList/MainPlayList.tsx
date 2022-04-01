@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { usePlayer } from "../../services/player";
 import { ITrack } from "../../services/track";
+import { Details } from "./Details";
 import styles from "./MainPlayList.module.css";
 
 interface IProps {
@@ -10,6 +11,7 @@ interface IProps {
 export const MainPlayList = ({ tracks }: IProps) => {
   const [selectedRowIndex, setSelectedRowIndex] = useState<number>(-1);
   const { queue, playTrack, currentTrack, replaceQueue } = usePlayer();
+  console.log(tracks);
 
   const trackClick = (track: ITrack) => {
     const isAlbumInQueue = queue?.some((value) => value.id === track.id);
@@ -29,7 +31,7 @@ export const MainPlayList = ({ tracks }: IProps) => {
 
   return (
     <div className={styles.main}>
-      {tracks.map((track, index, array) => {
+      {tracks.map((track, index) => {
         const isActive = currentTrack?.id === track.id;
         const isSelected = selectedRowIndex === index;
         const isSong = track.sourceUrl === null;
@@ -94,11 +96,7 @@ export const MainPlayList = ({ tracks }: IProps) => {
                   alt="like"
                 />
 
-                <img
-                  className={styles.dots}
-                  src="/assets/img/dots.svg"
-                  alt="dots"
-                />
+                <Details track={track} />
               </div>
             </div>
 

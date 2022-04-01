@@ -17,9 +17,16 @@ export const getUserTracksLibrary = async (
 
   const tracks = response.items.map((item: IPlaylist) => {
     const { album } = item.track;
-    const parser = parseTrackData(album.id, album.images[0].url, album.name);
+    const parser = parseTrackData(
+      album.id,
+      album.images[0].url,
+      album.name,
+      album.release_date
+    );
     return parser(item.track);
   });
+
+  console.log(tracks);
 
   return tracks;
 };
