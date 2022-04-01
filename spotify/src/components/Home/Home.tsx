@@ -2,12 +2,17 @@ import { useEffect, useMemo, useState } from "react";
 import { usePalette } from "react-palette";
 import { PlayerStatus } from "../../constants/player-status";
 import { usePlayer } from "../../services/player";
+import { IArtistInfo } from "../../services/subscriptions";
 import { ITrack } from "../../services/track";
 import { IUserInfo } from "../../services/userApi";
-import { getUserTracksLibrary } from "../../services/userPlaylist";
+import {
+  getUserFollowedArtists,
+  getUserTracksLibrary,
+} from "../../services/userPlaylist";
 import { Banner } from "../Banner/Banner";
 import { Button } from "../Button/Button";
 import { MainPlayList } from "../MainPlayList/MainPlayList";
+import { MainSubscriptions } from "../MainSubscriptions/MainSubscriptions";
 import { Title } from "../Title/Title";
 import styles from "./Home.module.css";
 
@@ -20,6 +25,8 @@ export const Home = ({ user }: IProps) => {
     usePlayer();
   const { data } = usePalette(user.avatarUrl);
   const [tracks, setTracks] = useState<ITrack[]>([]);
+  const [subscriptions, setSubscriptions] = useState<IArtistInfo[]>([]);
+  const [subscLimit, setSubscLimit] = useState<number>(6);
 
   const loadLibrary = async () => {
     const offset = tracks.length;
@@ -27,7 +34,17 @@ export const Home = ({ user }: IProps) => {
 
     try {
       const response = await getUserTracksLibrary(limit, offset);
+
       setTracks((tracks) => tracks.concat(response));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const loadArtists = async () => {
+    try {
+      const response = await getUserFollowedArtists(subscLimit);
+      setSubscriptions(() => response);
     } catch (error) {
       console.error(error);
     }
@@ -43,7 +60,6 @@ export const Home = ({ user }: IProps) => {
   const playPauseClick = () => {
     if (!isTracksInQueue) {
       replaceQueue(tracks);
-      console.log(tracks);
     }
 
     const newTracks = tracks.filter((track) => track.sourceUrl !== null);
@@ -60,6 +76,10 @@ export const Home = ({ user }: IProps) => {
   useEffect(() => {
     loadLibrary();
   }, []);
+
+  useEffect(() => {
+    loadArtists();
+  }, [subscLimit]);
 
   return (
     <div className={styles.home}>
@@ -80,7 +100,7 @@ export const Home = ({ user }: IProps) => {
 
           <p className={styles.subscriptions}>
             <img src="/assets/img/headphone.svg" alt="headphone" />
-            <span>n</span> subscriptions
+            <span>{subscriptions.length}</span> subscriptions
           </p>
 
           <Button text={text} onClick={playPauseClick} />
@@ -96,6 +116,18 @@ export const Home = ({ user }: IProps) => {
 
         <div className={styles.playlist}>
           <MainPlayList tracks={tracks} />
+        </div>
+
+        <Title
+          textTitle="Subscriptions"
+          textButton="See All"
+          onClick={() => {
+            setSubscLimit(50);
+          }}
+        />
+
+        <div className={styles.subscr}>
+          <MainSubscriptions subscr={subscriptions} />
         </div>
       </div>
     </div>

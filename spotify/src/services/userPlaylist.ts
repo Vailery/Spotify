@@ -1,6 +1,7 @@
 import { IAlbumData } from "./album";
 import { spotifyFetch } from "./helpers";
 import { ITrackData, parseTrackData } from "./track";
+import { parseSubscriptionsData } from "./subscriptions";
 
 interface IPlaylist {
   added_at: string;
@@ -21,4 +22,13 @@ export const getUserTracksLibrary = async (
   });
 
   return tracks;
+};
+
+export const getUserFollowedArtists = async (limit: number = 50) => {
+  const endpoint = `/me/following/?type=artist&limit=${limit}`;
+  const response = await spotifyFetch(endpoint);
+
+  const artist = response.artists.items.map(parseSubscriptionsData);
+
+  return artist;
 };
