@@ -49,8 +49,8 @@ export const PlayerControls = () => {
 
   const PlayPauseButton =
     playerStatus === PlayerStatus.PLAYING
-      ? "./assets/img/pause.svg"
-      : "./assets/img/play-player.svg";
+      ? "/assets/img/pause.svg"
+      : "/assets/img/play-player.svg";
 
   return (
     <div className={styles.main}>

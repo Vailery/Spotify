@@ -9,8 +9,8 @@ interface IPlaylist {
 }
 
 export const getUserTracksLibrary = async (
-  limit: number = 50,
-  offset: number = 0
+  offset: number = 0,
+  limit: number = 50
 ) => {
   const endpoint = `/me/tracks/?limit=${limit}&offset=${offset}`;
   const response = await spotifyFetch(endpoint);

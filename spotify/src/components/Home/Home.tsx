@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { usePalette } from "react-palette";
+import { useHistory } from "react-router-dom";
 import { PlayerStatus } from "../../constants/player-status";
 import { usePlayer } from "../../services/player";
 import { IArtistInfo } from "../../services/subscriptions";
@@ -27,13 +28,14 @@ export const Home = ({ user }: IProps) => {
   const [tracks, setTracks] = useState<ITrack[]>([]);
   const [subscriptions, setSubscriptions] = useState<IArtistInfo[]>([]);
   const [subscLimit, setSubscLimit] = useState<number>(6);
+  const history = useHistory();
 
   const loadLibrary = async () => {
     const offset = tracks.length;
     const limit = 4;
 
     try {
-      const response = await getUserTracksLibrary(limit, offset);
+      const response = await getUserTracksLibrary(offset, limit);
 
       setTracks((tracks) => tracks.concat(response));
     } catch (error) {
@@ -111,7 +113,9 @@ export const Home = ({ user }: IProps) => {
         <Title
           textTitle="Favorite Songs"
           textButton="See All"
-          onClick={() => {}}
+          onClick={() => {
+            history.push("/application/home/favorite_songs");
+          }}
         />
 
         <div className={styles.playlist}>
