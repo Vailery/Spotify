@@ -1,0 +1,44 @@
+.main {
+  position: relative;
+}
+
+.main .lirik {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+.main .lirik:hover,
+.main .lirik.active {
+  filter: sepia(100%) saturate(2000%) hue-rotate(100deg) brightness(1);
+}
+
+.lyrics {
+  background: #121212;
+  border-radius: 8px;
+  position: absolute;
+  top: 0px;
+  right: 15px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(70px);
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+}
+
+.lyrics.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-120%);
+}
+
+.lyrics p {
+  padding: 15px 20px;
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  color: #ffffff;
+  white-space: nowrap;
+  cursor: pointer;
+}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { usePlayer } from "../../../services/player";
 import { InputRange } from "../../InutRange/InputRange";
+import { Lyrics } from "../Lyrics/Lyrics";
 import styles from "./TrackControls.module.css";
 
 export const TrackControls = () => {
@@ -64,7 +65,8 @@ export const TrackControls = () => {
           value={isMuted ? 0 : volume * 100}
           onChange={changeVolumeClick}
         />
-        <img src="/assets/img/lirik.svg" alt="lirik" />
+
+        <Lyrics />
       </div>
     </>
   );
