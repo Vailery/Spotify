@@ -1,5 +1,7 @@
+// import { render } from "react";
 import { ReactNode, useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { renderIntoDocument } from "react-dom/test-utils";
+import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { Error } from "../components/Error/Error";
 import { SessionError } from "../components/Error/SessionError";
 import { FavoriteSongs } from "../components/FavoriteSongs/FavoriteSongs";
@@ -9,6 +11,7 @@ import { LeftMenu } from "../components/LeftMenu/LeftMenu";
 import { Loader } from "../components/Loader/Loader";
 import { Player } from "../components/Player/Player";
 import { RightMenu } from "../components/RightMenu/RightMenu";
+import { clearSession } from "../services/authentication";
 import { PlayerProvider } from "../services/player";
 import { getCurrentUser, IUserInfo } from "../services/userApi";
 import styles from "./Application.module.css";
@@ -19,8 +22,13 @@ export const Application = () => {
 
   useEffect(() => {
     getCurrentUser()
-      .then((user) => setUser(user))
-      .catch((err) => console.error(err.message));
+      .then((user) => {
+        setUser(user);
+      })
+      .catch((err) => {
+        console.error(err);
+        setUser(undefined);
+      });
   }, []);
 
   useEffect(() => {
