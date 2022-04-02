@@ -140,6 +140,7 @@
   background: #212121;
   padding: 10px;
   border-radius: 16px 16px 0 16px;
+  color: #ffffff;
 }
 
 .details .dots:hover + p {

@@ -27,6 +27,7 @@ export const Home = ({ user }: IProps) => {
   const { data } = usePalette(user.avatarUrl);
   const [tracks, setTracks] = useState<ITrack[]>([]);
   const [subscriptions, setSubscriptions] = useState<IArtistInfo[]>([]);
+  const [totalSubscr, setTotalSubscr] = useState<number>(0);
   const [subscLimit, setSubscLimit] = useState<number>(6);
   const history = useHistory();
 
@@ -46,7 +47,10 @@ export const Home = ({ user }: IProps) => {
   const loadArtists = async () => {
     try {
       const response = await getUserFollowedArtists(subscLimit);
-      setSubscriptions(() => response);
+      console.log(response);
+
+      setSubscriptions(() => response.artist);
+      setTotalSubscr(() => response.total);
     } catch (error) {
       console.error(error);
     }
@@ -102,7 +106,7 @@ export const Home = ({ user }: IProps) => {
 
           <p className={styles.subscriptions}>
             <img src="/assets/img/headphone.svg" alt="headphone" />
-            <span>{subscriptions.length}</span> subscriptions
+            <span>{totalSubscr}</span> subscriptions
           </p>
 
           <Button text={text} onClick={playPauseClick} />

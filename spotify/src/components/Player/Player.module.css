@@ -4,13 +4,15 @@
   width: 100%;
   padding: 24px 32px;
   color: white;
-  z-index: 3;
+  z-index: 4;
   background: rgba(18, 18, 18, 0.64);
   backdrop-filter: blur(74px);
 
   display: flex;
   justify-content: space-between;
 
+  transition: opacity 0.1ms ease-in-out;
+  opacity: 1;
   animation: 1s show;
 }
 

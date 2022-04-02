@@ -36,6 +36,7 @@ export const getUserFollowedArtists = async (limit: number = 50) => {
   const response = await spotifyFetch(endpoint);
 
   const artist = response.artists.items.map(parseSubscriptionsData);
+  const total = response.artists.total;
 
-  return artist;
+  return { artist, total };
 };

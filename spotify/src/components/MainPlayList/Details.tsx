@@ -29,10 +29,15 @@ export const Details = ({ track }: IProps) => {
 
   useEffect(() => {
     const root = document.getElementById("root");
+    const player = document.getElementById("player");
 
     isShowModal
       ? root?.setAttribute("style", "pointer-events: none")
       : root?.setAttribute("style", "pointer-events: auto");
+
+    isShowModal
+      ? player?.setAttribute("style", "opacity: 0")
+      : player?.setAttribute("style", "opacity: 1");
   }, [isShowModal]);
 
   return (
@@ -68,8 +73,9 @@ export const Details = ({ track }: IProps) => {
             ? {
                 opacity: "1",
                 visibility: "visible",
+                display: "block",
               }
-            : { opacity: "0", visibility: "hidden" }
+            : { opacity: "0", visibility: "hidden", display: "none" }
         }
       />
     </>

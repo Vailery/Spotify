@@ -10,7 +10,7 @@ export const Player = () => {
   return (
     <>
       {currentTrack ? (
-        <div className={styles.player}>
+        <div className={styles.player} id="player">
           <PlayerDetails
             isLiked={false}
             artist={currentTrack.artists[0].name}
