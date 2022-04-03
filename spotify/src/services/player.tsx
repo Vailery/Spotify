@@ -15,6 +15,8 @@ interface IProps {
 
 interface IPlayerData {
   queue: ITrack[];
+  recentQueue: ITrack[];
+  timeRecentQueue: Date[];
   currentTrack?: ITrack;
   playerStatus: PlayerStatus;
   currentTrackDuration: number;
@@ -37,6 +39,8 @@ const shuffle = (items: any[]) => {
 
 export const PlayerProvider = ({ children }: IProps) => {
   const [queue, setQueue] = useState<ITrack[]>();
+  const [recentQueue, setRecentQueue] = useState<ITrack[]>([]);
+  const [timeRecentQueue, setTimeRecentQueue] = useState<Date[]>([]);
   const [currentTrack, setCurrentTrack] = useState<ITrack>();
   const [playerStatus, setPlayerStatus] = useState<PlayerStatus>(
     PlayerStatus.STOPPED
@@ -52,12 +56,13 @@ export const PlayerProvider = ({ children }: IProps) => {
       if (!currentTrack || currentTrack.id !== track.id) {
         audioElement?.pause();
         audioElement?.remove();
+
         return setCurrentTrack(track);
       }
 
       audioElement?.paused ? audioElement.play() : audioElement?.pause();
     },
-    [audioElement, currentTrack]
+    [audioElement, currentTrack, recentQueue, timeRecentQueue]
   );
 
   const goToTrack = useCallback(
@@ -72,7 +77,6 @@ export const PlayerProvider = ({ children }: IProps) => {
   const replaceQueue = useCallback(
     (tracks: ITrack[]) => {
       const newTracks = tracks.filter((track) => track.sourceUrl !== null);
-      console.log(newTracks);
 
       setQueue(newTracks);
 
@@ -120,6 +124,47 @@ export const PlayerProvider = ({ children }: IProps) => {
   );
 
   useEffect(() => {
+    const storedRecent = localStorage.getItem("recent");
+    if (storedRecent) {
+      const storedRecentObj = JSON.parse(storedRecent);
+
+      const storedRecentQueue = storedRecentObj.recentQueue;
+      const storedTimeRecentQueue = storedRecentObj.timeRecentQueue;
+
+      setTimeRecentQueue(storedTimeRecentQueue);
+      setRecentQueue(storedRecentQueue);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (currentTrack) {
+      let date = new Date();
+      let isInArray = recentQueue.some((item) => item.id === currentTrack.id);
+
+      if (!isInArray) {
+        setTimeRecentQueue([...timeRecentQueue, date]);
+        setRecentQueue([...recentQueue, currentTrack]);
+      } else {
+        const i = recentQueue.findIndex((obj) => obj.id === currentTrack.id);
+
+        recentQueue.splice(i, 1);
+        timeRecentQueue.splice(i, 1);
+
+        setTimeRecentQueue([...timeRecentQueue, date]);
+        setRecentQueue([...recentQueue, currentTrack]);
+      }
+    }
+    //we only want to listen updates of currentTrack
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTrack]);
+
+  useEffect(() => {
+    const recent = JSON.stringify({ recentQueue, timeRecentQueue });
+    console.log(JSON.parse(recent));
+    localStorage.setItem("recent", recent);
+  }, [recentQueue, timeRecentQueue]);
+
+  useEffect(() => {
     if (currentTrack) {
       const audio = new Audio(currentTrack.sourceUrl);
       setAudioElement(audio);
@@ -163,6 +208,8 @@ export const PlayerProvider = ({ children }: IProps) => {
     <PlayerContext.Provider
       value={{
         queue: isShuffleActive ? shuffledQueue : queue!,
+        recentQueue,
+        timeRecentQueue,
         playTrack,
         currentTrack,
         playerStatus,
