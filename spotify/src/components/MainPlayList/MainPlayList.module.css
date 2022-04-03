@@ -70,7 +70,8 @@
 .number,
 .title,
 .artists,
-.duration {
+.duration,
+.info time {
   font-family: "Manrope";
   font-style: normal;
   font-weight: 700;
@@ -107,7 +108,8 @@
   align-items: center;
 }
 
-.artists {
+.artists,
+.info time {
   margin-right: 70px;
 }
 

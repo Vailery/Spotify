@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Moment from "react-moment";
 import { usePlayer } from "../../services/player";
 import { ITrack } from "../../services/track";
 import { Details } from "./Details";
@@ -6,9 +7,10 @@ import styles from "./MainPlayList.module.css";
 
 interface IProps {
   tracks: ITrack[];
+  time?: Date[];
 }
 
-export const MainPlayList = ({ tracks }: IProps) => {
+export const MainPlayList = ({ tracks, time }: IProps) => {
   const [selectedRowIndex, setSelectedRowIndex] = useState<number>(-1);
   const { queue, playTrack, currentTrack, replaceQueue } = usePlayer();
 
@@ -80,6 +82,14 @@ export const MainPlayList = ({ tracks }: IProps) => {
                     </span>
                   ))}
                 </p>
+
+                {time ? (
+                  <Moment locale="en" fromNow>
+                    {time[index]}
+                  </Moment>
+                ) : (
+                  <></>
+                )}
 
                 <img
                   className={styles.clock}

@@ -1,6 +1,5 @@
 // import { render } from "react";
 import { ReactNode, useEffect, useState } from "react";
-import { renderIntoDocument } from "react-dom/test-utils";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { Error } from "../components/Error/Error";
 import { SessionError } from "../components/Error/SessionError";
@@ -10,8 +9,8 @@ import { Home } from "../components/Home/Home";
 import { LeftMenu } from "../components/LeftMenu/LeftMenu";
 import { Loader } from "../components/Loader/Loader";
 import { Player } from "../components/Player/Player";
+import { RecentPlayed } from "../components/RecentPlayed/RecentPlayed";
 import { RightMenu } from "../components/RightMenu/RightMenu";
-import { clearSession } from "../services/authentication";
 import { PlayerProvider } from "../services/player";
 import { getCurrentUser, IUserInfo } from "../services/userApi";
 import styles from "./Application.module.css";
@@ -60,6 +59,11 @@ export const Application = () => {
                 path="/application/favorite_songs"
                 exact
                 component={FavoriteSongs}
+              />
+              <Route
+                path="/application/recent_played"
+                exact
+                component={RecentPlayed}
               />
               <Route path="*" component={Error} />
             </Switch>

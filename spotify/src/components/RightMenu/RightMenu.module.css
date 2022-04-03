@@ -88,6 +88,10 @@
   color: rgba(255, 255, 255, 0.72);
 }
 
+.info.active p {
+  color: #1db954;
+}
+
 .songs time {
   font-family: "Manrope";
   font-style: normal;

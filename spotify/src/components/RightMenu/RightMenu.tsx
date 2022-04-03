@@ -5,6 +5,7 @@ import Moment from "react-moment";
 import moment from "moment";
 import styles from "./RightMenu.module.css";
 import { Title } from "../Title/Title";
+import { useHistory } from "react-router-dom";
 
 interface IProps {
   user: IUserInfo;
@@ -30,7 +31,8 @@ moment.locale("en", {
 });
 
 export const RightMenu = ({ user }: IProps) => {
-  const { recentQueue, timeRecentQueue } = usePlayer();
+  const { recentQueue, timeRecentQueue, currentTrack } = usePlayer();
+  const history = useHistory();
 
   return (
     <div className={styles.rightMenu}>
@@ -40,19 +42,27 @@ export const RightMenu = ({ user }: IProps) => {
         <Title
           textTitle="Recent Played"
           textButton="See All"
-          onClick={() => {}}
+          onClick={() => {
+            history.push("/application/recent_played");
+          }}
         />
 
         {recentQueue.length !== 0 ? (
           <div className={styles.tracks}>
             {recentQueue.map((item, index) => {
+              const isActive = currentTrack?.id === item.id;
+
               if (index < 7) {
                 return (
                   <div key={`${item.title} ${index}`} className={styles.songs}>
                     <div className={styles.mainInfo}>
                       <img src={item.albumCover} alt={item.albumCover} />
 
-                      <div className={styles.info}>
+                      <div
+                        className={`${styles.info} ${
+                          isActive ? styles.active : ""
+                        } `}
+                      >
                         <p className={styles.infoTitle}>{item.title}</p>
                         <p className={styles.infoArtists}>
                           {item.artists.map((item, index, array) => (
