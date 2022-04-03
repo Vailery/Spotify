@@ -8,9 +8,10 @@ export const SessionError = () => {
 
   const goTo = () => {
     clearSession(() => {
-      history.push("/");
+      history.go(0);
     });
   };
+
   return (
     <div className={styles.mainSessionError}>
       <p>Looks like your session is over.</p>

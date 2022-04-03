@@ -20,8 +20,8 @@ export const Error = () => {
   return (
     <div className={styles.main}>
       <p>
-        If you see this page, it means that I am{" "}
-        <span>still working on it</span> or there is <span>no such page</span>
+        If you see this page, it means that I'm <span>still working on it</span>{" "}
+        or there is <span>no such page</span>
         ...
       </p>
       <div ref={container} className={styles.image} />

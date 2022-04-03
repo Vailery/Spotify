@@ -47,10 +47,10 @@ export const Home = ({ user }: IProps) => {
   const loadArtists = async () => {
     try {
       const response = await getUserFollowedArtists(subscLimit);
-      console.log(response);
+      // console.log(response);
 
       setSubscriptions(() => response.artist);
-      setTotalSubscr(() => response.total);
+      setTotalSubscr(response.total);
     } catch (error) {
       console.error(error);
     }
