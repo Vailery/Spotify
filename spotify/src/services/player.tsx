@@ -160,7 +160,7 @@ export const PlayerProvider = ({ children }: IProps) => {
 
   useEffect(() => {
     const recent = JSON.stringify({ recentQueue, timeRecentQueue });
-    console.log(JSON.parse(recent));
+
     localStorage.setItem("recent", recent);
   }, [recentQueue, timeRecentQueue]);
 

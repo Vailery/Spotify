@@ -16,7 +16,7 @@ export const Lyrics = () => {
   const loadLyrics = async () => {
     try {
       const response = await getSongLyrics(track, artist);
-      console.log(response);
+
       setLyrics(response);
     } catch (error) {
       console.error(error);

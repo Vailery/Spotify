@@ -32,9 +32,6 @@ moment.locale("en", {
 export const RightMenu = ({ user }: IProps) => {
   const { recentQueue, timeRecentQueue } = usePlayer();
 
-  console.log(recentQueue);
-  console.log(timeRecentQueue);
-
   return (
     <div className={styles.rightMenu}>
       <DropdownMenu avatar={user.avatarUrl} name={user.name} />

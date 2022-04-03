@@ -6,7 +6,6 @@ export const Header = () => {
   const [navigation, setNavigation] = useState("");
   const history = useHistory();
   const location = useLocation();
-  console.log(history);
 
   const from = "/application/".length;
 

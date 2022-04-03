@@ -26,8 +26,6 @@ export const getUserTracksLibrary = async (
     return parser(item.track);
   });
 
-  console.log(tracks);
-
   return tracks;
 };
 

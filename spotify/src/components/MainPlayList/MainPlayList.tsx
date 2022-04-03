@@ -11,7 +11,6 @@ interface IProps {
 export const MainPlayList = ({ tracks }: IProps) => {
   const [selectedRowIndex, setSelectedRowIndex] = useState<number>(-1);
   const { queue, playTrack, currentTrack, replaceQueue } = usePlayer();
-  console.log(tracks);
 
   const trackClick = (track: ITrack) => {
     const isAlbumInQueue = queue?.some((value) => value.id === track.id);
