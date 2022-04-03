@@ -14,10 +14,13 @@ export const spotifyFetch = async (endpoint: string) => {
 };
 
 export const musixMatchFetch = async (endpoint: string) => {
+  let musixMatchUrl = process.env.REACT_APP_MUSIXMATCH_BASE_URL + endpoint;
   return axios
     .create({
-      baseURL: `https://cors-anywhere.herokuapp.com/${process.env.REACT_APP_MUSIXMATCH_BASE_URL}`,
+      baseURL: `https://api.allorigins.win/get?url=${encodeURIComponent(
+        musixMatchUrl
+      )}`,
     })
-    .get(endpoint)
+    .get("")
     .then((response) => response.data);
 };
