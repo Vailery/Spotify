@@ -1,11 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
 import { usePalette } from "react-palette";
+import { useHistory } from "react-router-dom";
+import { PlayerStatus } from "../../constants/player-status";
 import { usePlayer } from "../../services/player";
+import { IArtistInfo } from "../../services/subscriptions";
 import { ITrack } from "../../services/track";
 import { IUserInfo } from "../../services/userApi";
-import { getUserTracksLibrary } from "../../services/userPlaylist";
+import {
+  getUserFollowedArtists,
+  getUserTracksLibrary,
+} from "../../services/userPlaylist";
 import { Banner } from "../Banner/Banner";
+import { Button } from "../Button/Button";
 import { MainPlayList } from "../MainPlayList/MainPlayList";
+import { MainSubscriptions } from "../MainSubscriptions/MainSubscriptions";
 import { Title } from "../Title/Title";
 import styles from "./Home.module.css";
 
@@ -18,14 +26,30 @@ export const Home = ({ user }: IProps) => {
     usePlayer();
   const { data } = usePalette(user.avatarUrl);
   const [tracks, setTracks] = useState<ITrack[]>([]);
+  const [subscriptions, setSubscriptions] = useState<IArtistInfo[]>([]);
+  const [totalSubscr, setTotalSubscr] = useState<number>(0);
+  const [subscLimit, setSubscLimit] = useState<number>(6);
+  const history = useHistory();
 
   const loadLibrary = async () => {
     const offset = tracks.length;
     const limit = 4;
 
     try {
-      const response = await getUserTracksLibrary(limit, offset);
+      const response = await getUserTracksLibrary(offset, limit);
+
       setTracks((tracks) => tracks.concat(response));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const loadArtists = async () => {
+    try {
+      const response = await getUserFollowedArtists(subscLimit);
+
+      setSubscriptions(() => response.artist);
+      setTotalSubscr(response.total);
     } catch (error) {
       console.error(error);
     }
@@ -41,16 +65,26 @@ export const Home = ({ user }: IProps) => {
   const playPauseClick = () => {
     if (!isTracksInQueue) {
       replaceQueue(tracks);
-      console.log(tracks);
     }
 
-    const trackToPlay = isTracksInQueue ? currentTrack : tracks[0];
+    const newTracks = tracks.filter((track) => track.sourceUrl !== null);
+    const trackToPlay = isTracksInQueue ? currentTrack : newTracks[0];
+
     playTrack(trackToPlay!);
   };
+
+  const text =
+    !isTracksInQueue || playerStatus !== PlayerStatus.PLAYING
+      ? "Play"
+      : "Pause";
 
   useEffect(() => {
     loadLibrary();
   }, []);
+
+  useEffect(() => {
+    loadArtists();
+  }, [subscLimit]);
 
   return (
     <div className={styles.home}>
@@ -71,12 +105,10 @@ export const Home = ({ user }: IProps) => {
 
           <p className={styles.subscriptions}>
             <img src="/assets/img/headphone.svg" alt="headphone" />
-            <span>n</span> subscriptions
+            <span>{totalSubscr}</span> subscriptions
           </p>
 
-          <button className={styles.playButton} onClick={playPauseClick}>
-            Play
-          </button>
+          <Button text={text} onClick={playPauseClick} />
         </div>
       </Banner>
 
@@ -84,11 +116,25 @@ export const Home = ({ user }: IProps) => {
         <Title
           textTitle="Favorite Songs"
           textButton="See All"
-          onClick={() => {}}
+          onClick={() => {
+            history.push("/application/home/favorite_songs");
+          }}
         />
 
         <div className={styles.playlist}>
           <MainPlayList tracks={tracks} />
+        </div>
+
+        <Title
+          textTitle="Subscriptions"
+          textButton="See All"
+          onClick={() => {
+            setSubscLimit(50);
+          }}
+        />
+
+        <div className={styles.subscr}>
+          <MainSubscriptions subscr={subscriptions} />
         </div>
       </div>
     </div>

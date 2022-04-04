@@ -1,3 +1,8 @@
+const authorityParam = "authority";
+const accessTokenParam = "accessToken";
+const refreshTokenParam = "refreshToken";
+const recentParam = "recent";
+
 export const getSpotifyAuthURL = () => {
   const authURL = process.env.REACT_APP_AUTHORIZATION_URL;
   const clientID = process.env.REACT_APP_CLIENT_ID;
@@ -14,37 +19,72 @@ export const getSpotifyAuthURL = () => {
 
   return `${authURL}/?client_id=${clientID}`
     .concat(`&redirect_uri=${redirectURL}`)
-    .concat(`&response_type=token`)
+    .concat(`&response_type=code`)
     .concat(`&scope=${encodeURIComponent(scopes.join(" "))}`)
     .concat(`&show_dialog=true`);
 };
 
-export const setSession = (
+export const updateAccessToken = (
   accessToken: string,
-  tokenLifetime: string,
   callback: () => void
 ) => {
-  const expiresIn = Date.now() + +tokenLifetime * 1000;
-  const authority = JSON.stringify({ accessToken, expiresIn });
+  const authority = JSON.parse(localStorage.getItem(authorityParam) || "{}");
 
-  localStorage.setItem("authority", authority);
+  authority[accessTokenParam] = accessToken;
+
+  localStorage.setItem(authorityParam, JSON.stringify(authority));
+
+  callback();
+};
+
+export const updateRefreshToken = (
+  refreshToken: string,
+  callback: () => void
+) => {
+  const authority = JSON.parse(localStorage.getItem(authorityParam) || "{}");
+
+  authority[refreshTokenParam] = refreshToken;
+
+  localStorage.setItem(authorityParam, JSON.stringify(authority));
 
   callback();
 };
 
 export const checkIsLogged = () => {
-  const storedAuthority = localStorage.getItem("authority");
+  const storedAuthority = localStorage.getItem(authorityParam);
   if (!storedAuthority) return false;
 
   const authority = JSON.parse(storedAuthority);
 
-  return authority.expiresIn > Date.now();
+  return (
+    authority[refreshTokenParam] != null &&
+    authority[refreshTokenParam] != undefined
+  );
 };
 
-export const getToken = () => {
-  const authority = JSON.parse(localStorage.getItem("authority") || "{}");
+export const getAccessToken = () => {
+  const authority = localStorage.getItem(authorityParam);
+  if (!authority) {
+    return null;
+  }
 
-  const accessToken = authority.accessToken;
+  const authorityObj = JSON.parse(authority);
+  const accessToken = authorityObj[accessTokenParam] || null;
 
   return accessToken;
+};
+
+export const getRefreshToken = () => {
+  const authority = JSON.parse(localStorage.getItem(authorityParam) || "{}");
+
+  const refreshToken = authority[refreshTokenParam];
+
+  return refreshToken;
+};
+
+export const clearSession = (callback: () => void) => {
+  localStorage.removeItem(authorityParam);
+  localStorage.removeItem(recentParam);
+
+  callback();
 };

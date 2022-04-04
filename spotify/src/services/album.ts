@@ -17,7 +17,9 @@ export interface IAlbumData {
 export const parseAlbumData = (data: IAlbumData) => {
   const { name, id, release_date } = data;
   const cover = data.images[0].url;
-  const tracks = data.tracks.items.map(parseTrackData(id, cover, name));
+  const tracks = data.tracks.items.map(
+    parseTrackData(id, cover, name, release_date)
+  );
   const artists = data.artists.map(parseArtistData);
   const releaseDate = new Date(release_date);
 

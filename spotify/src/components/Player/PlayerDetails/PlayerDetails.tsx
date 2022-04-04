@@ -8,10 +8,6 @@ interface IProps {
 }
 
 export const PlayerDetails = ({ artist, cover, title, isLiked }: IProps) => {
-  const likeIcon = isLiked
-    ? "/assets/img/favotite.svg"
-    : "/assets/img/like.svg";
-
   return (
     <div className={styles.main}>
       <img src={cover} alt="cover" className={styles.cover} />
@@ -21,7 +17,13 @@ export const PlayerDetails = ({ artist, cover, title, isLiked }: IProps) => {
         <p className={styles.artist}>{artist}</p>
       </div>
 
-      <img className={styles.like} src={likeIcon} alt="like" />
+      <img
+        className={`${styles.like} ${
+          isLiked ? styles.active : styles.inactive
+        }`}
+        src="/assets/img/like.svg"
+        alt="like"
+      />
     </div>
   );
 };

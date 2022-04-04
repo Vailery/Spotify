@@ -1,0 +1,83 @@
+.main {
+  height: 100vh;
+  background: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 100px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(3);
+}
+
+.loader div {
+  margin: 0 1.5px;
+  height: 100%;
+  width: 6px;
+  background: #1db954;
+  border-radius: 10px;
+  display: inline-block;
+  -webkit-animation: loader 2s infinite ease-in-out;
+  animation: loader 2s infinite ease-in-out;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.loader div.line_5 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.loader div.line_4,
+.loader div.line_6 {
+  -webkit-animation: loader-twice 2s infinite ease-in-out;
+  animation: loader-twice 2s infinite ease-in-out;
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.loader div.line_2,
+.loader div.line_8 {
+  -webkit-animation-delay: -0.7s;
+  animation-delay: -0.7s;
+}
+
+.loader div.line_1,
+.loader div.line_9 {
+  -webkit-animation-delay: -0.5s;
+  animation-delay: -0.5s;
+}
+
+.loader div.line_3,
+.loader div.line_7 {
+  -webkit-animation-delay: -0.4s;
+  animation-delay: -0.4s;
+}
+
+@keyframes loader {
+  0%,
+  40%,
+  100% {
+    height: calc(60px / 4);
+  }
+  20% {
+    height: 60px;
+  }
+}
+
+@keyframes loader-twice {
+  0%,
+  35%,
+  70%,
+  100% {
+    height: calc(60px / 4);
+  }
+  20%,
+  50% {
+    height: 60px;
+  }
+}

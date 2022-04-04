@@ -14,6 +14,6 @@ export const LibraryList: IMenuListState[] = [
   {
     id: 3,
     img: "/assets/img/local.svg",
-    title: "Local Files",
+    title: "Recent Played",
   },
 ];

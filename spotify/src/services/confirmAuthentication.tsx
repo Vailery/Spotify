@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { setSession } from "./authentication";
+import { setRefreshTokenFromCode } from "./helpers";
 
 export const ConfirmAuthentication = ({
   callback,
@@ -11,26 +11,15 @@ export const ConfirmAuthentication = ({
   const history = useHistory();
 
   useEffect(() => {
-    const params = location.hash
-      .substring(1)
-      .split("&")
-      .reduce((prev: { [key: string]: string }, curr: string) => {
-        const [firstPart, secondPart] = curr.split("=");
+    const params = new URLSearchParams(location.search);
 
-        return {
-          ...prev,
-          [firstPart]: decodeURIComponent(secondPart),
-        };
-      }, {});
-
-    const token = params.access_token;
-    const tokenLifetime = params.expires_in;
+    const code = params.get("code") || "";
     const redirect = () => {
       callback(true);
       history.push("/application");
     };
 
-    setSession(token, tokenLifetime, redirect);
+    setRefreshTokenFromCode(code, redirect);
   }, []);
 
   return <></>;

@@ -9,6 +9,7 @@ export interface ITrack {
   id: string;
   sourceUrl: string;
   title: string;
+  albumReleaseDate: string;
 }
 
 export interface ITrackData {
@@ -20,7 +21,12 @@ export interface ITrackData {
 }
 
 export const parseTrackData =
-  (albumId: string, albumCover: string, albumName: string) =>
+  (
+    albumId: string,
+    albumCover: string,
+    albumName: string,
+    albumReleaseDate: string
+  ) =>
   (data: ITrackData) => {
     const title = data.name;
     const sourceUrl = data.preview_url;
@@ -37,5 +43,6 @@ export const parseTrackData =
       albumId,
       albumName,
       duration,
+      albumReleaseDate,
     };
   };

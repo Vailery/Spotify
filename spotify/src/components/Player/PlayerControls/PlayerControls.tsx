@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { PlayerStatus } from "../../../constants/player-status";
 import { usePlayer } from "../../../services/player";
 import styles from "./PlayerControls.module.css";
 
 export const PlayerControls = () => {
-  const { queue, currentTrack, playTrack, goToTrack } = usePlayer();
+  const {
+    queue,
+    currentTrack,
+    playTrack,
+    goToTrack,
+    playerStatus,
+    toggleRepeat,
+    isRepeatActive,
+    toggleShuffle,
+    isShuffleActive,
+  } = usePlayer();
 
   const PlayPauseClick = () => {
     if (queue.length === 0 || !currentTrack) {
@@ -25,7 +35,7 @@ export const PlayerControls = () => {
     const currentIndex = queue.findIndex(
       (value) => value.id === currentTrack?.id
     );
-    if (currentIndex + 1 >= queue.length) {
+    if (currentIndex + 1 >= queue.length && isRepeatActive) {
       return playTrack(queue[0]);
     }
 
@@ -37,18 +47,20 @@ export const PlayerControls = () => {
     goToTrack(0);
   };
 
-  const duration = (ms: number) => {
-    const date = new Date(ms);
-
-    return `${date.getMinutes()}:${date.getSeconds()}`;
-  };
+  const PlayPauseButton =
+    playerStatus === PlayerStatus.PLAYING
+      ? "/assets/img/pause.svg"
+      : "/assets/img/play-player.svg";
 
   return (
     <div className={styles.main}>
       <img
-        className={styles.shuffle}
+        className={`${styles.shuffle} ${
+          isShuffleActive ? styles.active : styles.inactive
+        }`}
         src="/assets/img/shuffle.svg"
         alt="shuffle"
+        onClick={toggleShuffle}
       />
 
       <img
@@ -60,7 +72,7 @@ export const PlayerControls = () => {
       />
 
       <div className={styles.controls} onClick={PlayPauseClick}>
-        <img className={styles.pause} src="/assets/img/pause.svg" alt="pause" />
+        <img className={styles.pause} src={PlayPauseButton} alt="pause" />
       </div>
 
       <img
@@ -71,9 +83,12 @@ export const PlayerControls = () => {
       />
 
       <img
-        className={styles.repeate}
+        className={`${styles.repeat} ${
+          isRepeatActive ? styles.active : styles.inactive
+        }`}
         src="/assets/img/repeate.svg"
         alt="repeate"
+        onClick={toggleRepeat}
       />
     </div>
   );

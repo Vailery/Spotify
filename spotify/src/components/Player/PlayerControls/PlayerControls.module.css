@@ -2,18 +2,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1;
 }
 
 .main img {
   filter: invert(1);
   cursor: pointer;
+  transition: all 0.5s ease;
 }
 
 .shuffle {
   margin-right: 24px;
 }
 
-.repeate {
+.repeat {
   margin-left: 24px;
 }
 
@@ -32,4 +34,18 @@
 
 .controls .pause {
   filter: invert(0);
+}
+
+.shuffle.inactive:hover,
+.shuffle.active,
+.previous:hover,
+.next:hover,
+.repeat.inactive:hover,
+.repeat.active {
+  filter: sepia(100%) saturate(2000%) hue-rotate(100deg) brightness(1);
+}
+
+.shuffle.inactive,
+.repeat.inactive {
+  filter: invert(1);
 }

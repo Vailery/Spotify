@@ -3,6 +3,7 @@
   height: 90vh;
   background-color: #121212;
   padding: 32px;
+  z-index: 4;
 }
 
 .mainInfo {
@@ -51,31 +52,23 @@
 }
 
 .subscriptions span {
-  margin-left: 12px;
   color: #ffffff;
   font-weight: 600;
+  margin: 0 5px 0 12px;
 }
 
-.playButton {
-  background: #1db954;
-  border-radius: 40px;
-  border: 0;
-  margin-top: 32px;
-  padding: 12px 24px;
-  font-family: "Manrope";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 22px;
-  letter-spacing: 0.04em;
-  color: #ffffff;
-  text-transform: uppercase;
+.photo {
+  width: auto;
+  height: 100%;
+  padding: 15px;
 }
 
 .photo img {
   border-radius: 50%;
   margin: 0 10px;
-  transform: scale(0.9);
+  width: auto;
+  height: 100%;
+  box-shadow: 0 4px 60px rgb(0 0 0 / 50%);
 }
 
 .main {
@@ -83,9 +76,14 @@
   flex-direction: column;
   overflow: scroll;
   height: 100%;
-  position: relative;
+  position: sticky;
+  top: 0;
 }
 
 .playlist {
   margin-bottom: 32px;
+}
+
+.subscr {
+  margin-bottom: 30%;
 }

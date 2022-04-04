@@ -15,6 +15,7 @@
   font-size: 20px;
   line-height: 27px;
   color: #ffffff;
+  white-space: nowrap;
 }
 
 .button {
@@ -25,4 +26,10 @@
   line-height: 22px;
   color: #1db954;
   cursor: pointer;
+  transition: all 0.5s ease;
+  white-space: nowrap;
+}
+
+.button:hover {
+  color: #1fca5b;
 }
