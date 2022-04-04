@@ -23,7 +23,7 @@ export const spotifyFetch = async (endpoint: string) => {
       return resp;
     },
     async function (error) {
-      if (error.response.status == 401) {
+      if (error.response.status === 401) {
         await refreshAccessToken();
         return axiosApi.request({
           ...error.config,

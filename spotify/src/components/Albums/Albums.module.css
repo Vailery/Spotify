@@ -1,0 +1,75 @@
+.main {
+  display: flex;
+  justify-content: center;
+  gap: 20px 15px;
+  flex-wrap: wrap;
+}
+
+.album {
+  position: relative;
+  flex: 1;
+  flex-grow: 0;
+  width: 100%;
+  background: #181818;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.album .albumImg {
+  width: 118px;
+  height: 118px;
+}
+
+.album .albumImg img {
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 4px 24px rgb(0 0 0 / 50%);
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.album .albumInfo {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  transition: opacity 0.4s ease, visibility 0.4s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  filter: opacity(0.8);
+  padding: 5px;
+}
+
+.album .albumInfo p {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.72);
+  text-align: center;
+  filter: opacity(1);
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.album .albumInfo p:first-of-type {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #ffffff;
+}
+
+.album .albumInfo.active {
+  visibility: visible;
+  opacity: 1;
+}

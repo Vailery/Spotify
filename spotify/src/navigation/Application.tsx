@@ -1,6 +1,5 @@
-// import { render } from "react";
 import { ReactNode, useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Error } from "../components/Error/Error";
 import { SessionError } from "../components/Error/SessionError";
 import { FavoriteSongs } from "../components/FavoriteSongs/FavoriteSongs";
@@ -11,6 +10,7 @@ import { Loader } from "../components/Loader/Loader";
 import { Player } from "../components/Player/Player";
 import { RecentPlayed } from "../components/RecentPlayed/RecentPlayed";
 import { RightMenu } from "../components/RightMenu/RightMenu";
+import { Search } from "../components/Search/Search";
 import { PlayerProvider } from "../services/player";
 import { getCurrentUser, IUserInfo } from "../services/userApi";
 import styles from "./Application.module.css";
@@ -18,6 +18,7 @@ import styles from "./Application.module.css";
 export const Application = () => {
   const [user, setUser] = useState<IUserInfo>();
   const [error, setError] = useState<ReactNode>();
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     getCurrentUser()
@@ -42,7 +43,7 @@ export const Application = () => {
         <PlayerProvider>
           <LeftMenu />
           <div className={styles.main}>
-            <Header />
+            <Header search={search} setSearch={setSearch} />
             <Switch>
               <Route path="/application/" exact>
                 <Home user={user} />
@@ -65,6 +66,9 @@ export const Application = () => {
                 exact
                 component={RecentPlayed}
               />
+              <Route path="/application/search">
+                <Search search={search} />
+              </Route>
               <Route path="*" component={Error} />
             </Switch>
           </div>

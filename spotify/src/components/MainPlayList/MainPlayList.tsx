@@ -26,8 +26,11 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
 
   const duration = (ms: number) => {
     const date = new Date(ms);
+    const seconds = date.getSeconds();
 
-    return `${date.getMinutes()}:${date.getSeconds()}`;
+    const sec = seconds.toString().length === 1 ? `${seconds}0` : seconds;
+
+    return `${date.getMinutes()}:${sec}`;
   };
 
   return (
