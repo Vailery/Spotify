@@ -12,7 +12,15 @@ interface IProps {
 
 export const MainPlayList = ({ tracks, time }: IProps) => {
   const [selectedRowIndex, setSelectedRowIndex] = useState<number>(-1);
-  const { queue, playTrack, currentTrack, replaceQueue } = usePlayer();
+  const {
+    queue,
+    playTrack,
+    currentTrack,
+    replaceQueue,
+    favoriteTracks,
+    removeTrack,
+    addTrack,
+  } = usePlayer();
 
   const trackClick = (track: ITrack) => {
     const isAlbumInQueue = queue?.some((value) => value.id === track.id);
@@ -36,6 +44,9 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
   return (
     <div className={styles.main}>
       {tracks.map((track, index) => {
+        const isInFavorite = favoriteTracks.some(
+          (item) => item.id === track.id
+        );
         const isActive = currentTrack?.id === track.id;
         const isSelected = selectedRowIndex === index;
         const isSong = track.sourceUrl === null;
@@ -48,11 +59,13 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
             <div
               className={`${styles.track} 
               ${isActive ? styles.active : styles.inactive} 
-              ${isSelected ? styles.select : styles.unselect}
-              ${isSong ? styles.nosong : styles.song}`}
+              ${isSelected ? styles.select : styles.unselect}`}
               onClick={() => setSelectedRowIndex(index)}
             >
-              <div className={styles.mainInfo}>
+              <div
+                className={`${styles.mainInfo} 
+              ${isSong ? styles.nosong : styles.song}`}
+              >
                 <div className={styles.playButton}>
                   <p className={styles.number}>{index + 1}</p>
 
@@ -103,9 +116,16 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
                 <p className={styles.duration}>{duration(track.duration)}</p>
 
                 <img
-                  className={styles.like}
+                  className={`${styles.like} ${
+                    isInFavorite ? styles.active : {}
+                  }`}
                   src="/assets/img/like.svg"
                   alt="like"
+                  onClick={() => {
+                    isInFavorite
+                      ? removeTrack(track.id)
+                      : addTrack(track.id, track);
+                  }}
                 />
 
                 <Details track={track} />

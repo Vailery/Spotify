@@ -15,6 +15,7 @@ export const getSpotifyAuthURL = () => {
     "user-read-recently-played",
     "user-follow-read",
     "user-library-read",
+    "user-library-modify",
   ];
 
   return `${authURL}/?client_id=${clientID}`
@@ -57,8 +58,8 @@ export const checkIsLogged = () => {
   const authority = JSON.parse(storedAuthority);
 
   return (
-    authority[refreshTokenParam] != null &&
-    authority[refreshTokenParam] != undefined
+    authority[refreshTokenParam] !== null &&
+    authority[refreshTokenParam] !== undefined
   );
 };
 

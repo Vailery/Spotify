@@ -44,7 +44,7 @@
   display: block;
 }
 
-.track.nosong {
+.mainInfo.nosong {
   pointer-events: none;
   opacity: 0.4;
   filter: brightness(0.8) grayscale(1);
@@ -155,7 +155,8 @@
   margin-left: 48px;
 }
 
-.like {
+.like:hover,
+.like.active {
   filter: sepia(100%) saturate(2000%) hue-rotate(100deg) brightness(1);
 }
 

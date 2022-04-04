@@ -1,5 +1,5 @@
 import { IAlbumData } from "./album";
-import { spotifyFetch } from "./helpers";
+import { spotifyDeleteFetch, spotifyFetch, spotifyPutFetch } from "./helpers";
 import { ITrackData, parseTrackData } from "./track";
 import { parseSubscriptionsData } from "./subscriptions";
 
@@ -37,4 +37,18 @@ export const getUserFollowedArtists = async (limit: number = 50) => {
   const total = response.artists.total;
 
   return { artist, total };
+};
+
+export const addNewFavotiteSongs = async (id: string) => {
+  const endpoint = `/me/tracks/?ids=${id}`;
+  const response = await spotifyPutFetch(endpoint);
+
+  return response;
+};
+
+export const removeFavotiteSong = async (id: string) => {
+  const endpoint = `/me/tracks/?ids=${id}`;
+  const response = await spotifyDeleteFetch(endpoint);
+
+  return response;
 };

@@ -34,7 +34,72 @@ export const spotifyFetch = async (endpoint: string) => {
     }
   );
 
-  return axiosApi.get(endpoint).then((response) => response.data);
+  return axiosApi
+    .get(endpoint)
+    .then((response) => response.data)
+    .catch((err) => console.error(err));
+};
+
+export const spotifyPutFetch = async (endpoint: string) => {
+  const generateHeaders = () => {
+    return {
+      Authorization: `Bearer ${getAccessToken()}`,
+    };
+  };
+
+  const axiosApi = axios.create({
+    baseURL: process.env.REACT_APP_BASE_URL,
+    headers: generateHeaders(),
+  });
+
+  axiosApi.interceptors.response.use(
+    (resp) => {
+      return resp;
+    },
+    async function (error) {
+      if (error.response.status === 401) {
+        await refreshAccessToken();
+        return axiosApi.request({
+          ...error.config,
+          headers: generateHeaders(),
+        });
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  return axiosApi.put(endpoint).catch((err) => console.error(err));
+};
+
+export const spotifyDeleteFetch = async (endpoint: string) => {
+  const generateHeaders = () => {
+    return {
+      Authorization: `Bearer ${getAccessToken()}`,
+    };
+  };
+
+  const axiosApi = axios.create({
+    baseURL: process.env.REACT_APP_BASE_URL,
+    headers: generateHeaders(),
+  });
+
+  axiosApi.interceptors.response.use(
+    (resp) => {
+      return resp;
+    },
+    async function (error) {
+      if (error.response.status === 401) {
+        await refreshAccessToken();
+        return axiosApi.request({
+          ...error.config,
+          headers: generateHeaders(),
+        });
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  return axiosApi.delete(endpoint).catch((err) => console.error(err));
 };
 
 const refreshAccessToken = async () => {
@@ -104,5 +169,6 @@ export const musixMatchFetch = async (endpoint: string) => {
       )}`,
     })
     .get("")
-    .then((response) => response.data);
+    .then((response) => response.data)
+    .catch((err) => console.error(err));
 };
