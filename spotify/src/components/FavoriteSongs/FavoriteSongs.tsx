@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { PlayerStatus } from "../../constants/player-status";
 import { usePlayer } from "../../services/player";
-import { ITrack } from "../../services/track";
-import { getUserTracksLibrary } from "../../services/userPlaylist";
+import { ThemeContext } from "../../services/ThemeContext";
 import { MainPlayList } from "../MainPlayList/MainPlayList";
 import { Title } from "../Title/Title";
 import styles from "./FavoriteSongs.module.css";
@@ -16,6 +15,7 @@ export const FavoriteSongs = () => {
     replaceQueue,
     favoriteTracks,
   } = usePlayer();
+  const { theme } = useContext(ThemeContext);
 
   const isTracksInQueue = useMemo(
     () =>
@@ -44,7 +44,12 @@ export const FavoriteSongs = () => {
       : "Pause";
 
   return (
-    <div className={styles.main}>
+    <div
+      className={styles.main}
+      style={{
+        backgroundColor: theme.darkBckgColor,
+      }}
+    >
       <Title
         textTitle="Favorite Songs"
         textButton={text}

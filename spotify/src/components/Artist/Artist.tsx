@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Palette } from "react-palette";
 import { useParams } from "react-router-dom";
 import { PlayerStatus } from "../../constants/player-status";
@@ -10,6 +10,7 @@ import {
   getInfoAboutArtists,
   IArtistInfo,
 } from "../../services/subscriptions";
+import { ThemeContext } from "../../services/ThemeContext";
 import { ITrack } from "../../services/track";
 import { Albums } from "../Albums/Albums";
 import { Banner } from "../Banner/Banner";
@@ -21,6 +22,7 @@ import styles from "./Artist.module.css";
 export const Artist = () => {
   const { playTrack, playerStatus, currentTrack, queue, replaceQueue } =
     usePlayer();
+  const { theme } = useContext(ThemeContext);
   const params: { artistId: string } = useParams();
   const [tracks, setTracks] = useState<ITrack[]>([]);
   const [artist, setArtist] = useState<IArtistInfo>();
@@ -95,7 +97,12 @@ export const Artist = () => {
   }, [albumsLimit]);
 
   return artist ? (
-    <div className={styles.main}>
+    <div
+      className={styles.main}
+      style={{
+        backgroundColor: theme.darkBckgColor,
+      }}
+    >
       <Palette src={artist.avatar}>
         {({ data }) => (
           <Banner

@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { IAlbum } from "../../services/album";
 import { getSearchResult } from "../../services/search";
 import { IArtistInfo } from "../../services/subscriptions";
+import { ThemeContext } from "../../services/ThemeContext";
 import { ITrack } from "../../services/track";
 import { Albums } from "../Albums/Albums";
 import { MainPlayList } from "../MainPlayList/MainPlayList";
@@ -21,6 +22,7 @@ export const Search = ({ search }: IProps) => {
   const [loadSongsOffset, setLoadSongsOffset] = useState<number>(0);
   const [loadAlbumsOffset, setLoadAlbumsOffset] = useState<number>(0);
   const [loadArtistsOffset, setLoadArtistsOffset] = useState<number>(0);
+  const { theme } = useContext(ThemeContext);
   const history = useHistory();
   const limit = 5;
 
@@ -113,7 +115,12 @@ export const Search = ({ search }: IProps) => {
   }, [search]);
 
   return (
-    <div className={styles.main}>
+    <div
+      className={styles.main}
+      style={{
+        backgroundColor: theme.darkBckgColor,
+      }}
+    >
       <div className={styles.items}>
         <Title
           textTitle="Songs"

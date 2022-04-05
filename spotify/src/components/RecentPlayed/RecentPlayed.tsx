@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { PlayerStatus } from "../../constants/player-status";
 import { usePlayer } from "../../services/player";
+import { ThemeContext } from "../../services/ThemeContext";
 import { ITrack } from "../../services/track";
 import { MainPlayList } from "../MainPlayList/MainPlayList";
 import { Title } from "../Title/Title";
@@ -16,6 +17,7 @@ export const RecentPlayed = () => {
     recentQueue,
     timeRecentQueue,
   } = usePlayer();
+  const { theme } = useContext(ThemeContext);
   const [tracks, setTracks] = useState<ITrack[]>([]);
 
   const isTracksInQueue = useMemo(
@@ -46,7 +48,12 @@ export const RecentPlayed = () => {
   }, [recentQueue]);
 
   return (
-    <div className={styles.main}>
+    <div
+      className={styles.main}
+      style={{
+        backgroundColor: theme.darkBckgColor,
+      }}
+    >
       <Title
         textTitle="Recent Played"
         textButton={text}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Palette } from "react-palette";
 import { useHistory, useParams } from "react-router-dom";
 import { PlayerStatus } from "../../constants/player-status";
@@ -8,6 +8,7 @@ import {
   getAlbumTracks,
   getInfoAboutArtistAlbum,
 } from "../../services/subscriptions";
+import { ThemeContext } from "../../services/ThemeContext";
 import { ITrack } from "../../services/track";
 import { Banner } from "../Banner/Banner";
 import { Button } from "../Button/Button";
@@ -25,6 +26,7 @@ export const Album = () => {
     loadAlbum,
     currentAlbum,
   } = usePlayer();
+  const { theme } = useContext(ThemeContext);
   const params: { albumId: string } = useParams();
   const [tracks, setTracks] = useState<ITrack[]>([]);
   const history = useHistory();
@@ -67,7 +69,12 @@ export const Album = () => {
   }, [params.albumId]);
 
   return currentAlbum ? (
-    <div className={styles.main}>
+    <div
+      className={styles.main}
+      style={{
+        backgroundColor: theme.darkBckgColor,
+      }}
+    >
       <Palette src={currentAlbum.cover}>
         {({ data }) => {
           let date = new Date(currentAlbum.releaseDate);
