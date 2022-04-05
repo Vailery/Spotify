@@ -1,5 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Album } from "../components/Album/Album";
+import { Artist } from "../components/Artist/Artist";
 import { Error } from "../components/Error/Error";
 import { SessionError } from "../components/Error/SessionError";
 import { FavoriteSongs } from "../components/FavoriteSongs/FavoriteSongs";
@@ -69,6 +71,16 @@ export const Application = () => {
               <Route path="/application/search">
                 <Search search={search} />
               </Route>
+              <Route
+                path="/application/artist/:artistId"
+                exact
+                component={Artist}
+              />
+              <Route
+                path="/application/album/:albumId"
+                exact
+                component={Album}
+              />
               <Route path="*" component={Error} />
             </Switch>
           </div>

@@ -2,8 +2,8 @@ import styles from "./Title.module.css";
 
 interface ITitle {
   textTitle: string;
-  textButton: string;
-  onClick: () => void;
+  textButton?: string;
+  onClick?: () => void;
 }
 
 export const Title = ({ textTitle, textButton, onClick }: ITitle) => {

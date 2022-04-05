@@ -2,6 +2,7 @@ import styles from "./Albums.module.css";
 import { useState } from "react";
 import { IAlbum } from "../../services/album";
 import { usePalette } from "react-palette";
+import { useHistory } from "react-router-dom";
 
 interface IProps {
   item: IAlbum;
@@ -10,6 +11,7 @@ interface IProps {
 export const Album = ({ item }: IProps) => {
   const [isHover, setIsHover] = useState(false);
   const { data } = usePalette(item.cover);
+  const history = useHistory();
 
   return (
     <div
@@ -18,6 +20,9 @@ export const Album = ({ item }: IProps) => {
       }}
       onMouseLeave={() => {
         setIsHover(false);
+      }}
+      onClick={() => {
+        history.push("/application/album/" + item.id);
       }}
       className={styles.album}
     >

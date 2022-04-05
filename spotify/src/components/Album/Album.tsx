@@ -1,0 +1,137 @@
+import { useEffect, useMemo, useState } from "react";
+import { Palette } from "react-palette";
+import { useHistory, useParams } from "react-router-dom";
+import { PlayerStatus } from "../../constants/player-status";
+import { IAlbum } from "../../services/album";
+import { usePlayer } from "../../services/player";
+import {
+  getAlbumTracks,
+  getInfoAboutArtistAlbum,
+} from "../../services/subscriptions";
+import { ITrack } from "../../services/track";
+import { Banner } from "../Banner/Banner";
+import { Button } from "../Button/Button";
+import { MainPlayList } from "../MainPlayList/MainPlayList";
+import { Title } from "../Title/Title";
+import styles from "./Album.module.css";
+
+export const Album = () => {
+  const {
+    playTrack,
+    playerStatus,
+    currentTrack,
+    queue,
+    replaceQueue,
+    loadAlbum,
+    currentAlbum,
+  } = usePlayer();
+  const params: { albumId: string } = useParams();
+  const [tracks, setTracks] = useState<ITrack[]>([]);
+  const history = useHistory();
+
+  const loadLibrary = async () => {
+    try {
+      const response = await getAlbumTracks(params.albumId);
+      setTracks(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const isTracksInQueue = useMemo(
+    () =>
+      tracks.every((track) => queue?.some((value) => value.id === track.id)) ??
+      false,
+    [tracks, queue]
+  );
+
+  const playPauseClick = () => {
+    if (!isTracksInQueue) {
+      replaceQueue(tracks);
+    }
+
+    const newTracks = tracks.filter((track) => track.sourceUrl !== null);
+    const trackToPlay = isTracksInQueue ? currentTrack : newTracks[0];
+
+    playTrack(trackToPlay!);
+  };
+
+  const text =
+    !isTracksInQueue || playerStatus !== PlayerStatus.PLAYING
+      ? "Play"
+      : "Pause";
+
+  useEffect(() => {
+    loadAlbum(params.albumId);
+    loadLibrary();
+  }, [params.albumId]);
+
+  return currentAlbum ? (
+    <div className={styles.main}>
+      <Palette src={currentAlbum.cover}>
+        {({ data }) => {
+          let date = new Date(currentAlbum.releaseDate);
+          let releaseDate = `${date.getDate()} ${date.toLocaleString("en-us", {
+            month: "short",
+          })} ${date.getFullYear()}`;
+          return (
+            <Banner
+              bgColor={`linear-gradient(300deg, ${data.muted}, ${data.darkMuted})`}
+            >
+              <div className={styles.info}>
+                <div className={styles.mainInfo}>
+                  <div className={styles.profile}>
+                    {currentAlbum.artists.map((item, index, array) => (
+                      <p key={item.name}>
+                        {index === array.length - 1 ? (
+                          <span
+                            onClick={() => {
+                              history.push("/application/artist/" + item.id);
+                            }}
+                          >
+                            {item.name}
+                          </span>
+                        ) : (
+                          <span
+                            onClick={() => {
+                              history.push("/application/artist/" + item.id);
+                            }}
+                          >
+                            {item.name.concat(", ")}
+                          </span>
+                        )}
+                      </p>
+                    ))}
+                  </div>
+
+                  <h2>{currentAlbum.name}</h2>
+
+                  <p className={styles.release}>
+                    <img src="/assets/img/recently.svg" alt="recently" />
+                    <span>{releaseDate}</span> release date
+                  </p>
+
+                  <Button text={text} onClick={playPauseClick} />
+                </div>
+
+                <div className={styles.photo}>
+                  <img src={currentAlbum.cover} alt={currentAlbum.name} />
+                </div>
+              </div>
+            </Banner>
+          );
+        }}
+      </Palette>
+
+      <div className={styles.general}>
+        <Title textTitle="Tracks" />
+
+        <div className={styles.playlist}>
+          <MainPlayList tracks={tracks} albumCover={currentAlbum.cover} />
+        </div>
+      </div>
+    </div>
+  ) : (
+    <></>
+  );
+};

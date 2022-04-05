@@ -7,6 +7,8 @@ import {
   useState,
 } from "react";
 import { PlayerStatus } from "../constants/player-status";
+import { IAlbum } from "./album";
+import { getInfoAboutArtistAlbum } from "./subscriptions";
 import { ITrack } from "./track";
 import {
   addNewFavotiteSongs,
@@ -24,6 +26,7 @@ interface IPlayerData {
   favoriteTracks: ITrack[];
   timeRecentQueue: Date[];
   currentTrack?: ITrack;
+  currentAlbum?: IAlbum;
   playerStatus: PlayerStatus;
   currentTrackDuration: number;
   isShuffleActive: boolean;
@@ -37,6 +40,7 @@ interface IPlayerData {
   getProgress: (fn: (progress: number) => void) => void;
   removeTrack: (id: string) => void;
   addTrack: (id: string, item: ITrack) => void;
+  loadAlbum: (id: string) => void;
 }
 
 const PlayerContext = createContext<IPlayerData>({} as IPlayerData);
@@ -51,6 +55,7 @@ export const PlayerProvider = ({ children }: IProps) => {
   const [favoriteTracks, setFavoriteTracks] = useState<ITrack[]>([]);
   const [timeRecentQueue, setTimeRecentQueue] = useState<Date[]>([]);
   const [currentTrack, setCurrentTrack] = useState<ITrack>();
+  const [currentAlbum, setCurrentAlbum] = useState<IAlbum>();
   const [playerStatus, setPlayerStatus] = useState<PlayerStatus>(
     PlayerStatus.STOPPED
   );
@@ -160,6 +165,16 @@ export const PlayerProvider = ({ children }: IProps) => {
     addNewFavotiteSongs(id);
   };
 
+  const loadAlbum = async (id: string) => {
+    try {
+      const response = await getInfoAboutArtistAlbum(id);
+
+      setCurrentAlbum(response.album);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     loadLibrary();
   }, []);
@@ -254,6 +269,7 @@ export const PlayerProvider = ({ children }: IProps) => {
         favoriteTracks,
         playTrack,
         currentTrack,
+        currentAlbum,
         playerStatus,
         goToTrack,
         currentTrackDuration,
@@ -266,6 +282,7 @@ export const PlayerProvider = ({ children }: IProps) => {
         getProgress,
         removeTrack,
         addTrack,
+        loadAlbum,
       }}
     >
       {children}

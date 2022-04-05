@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Moment from "react-moment";
+import { Redirect, useHistory } from "react-router-dom";
 import { usePlayer } from "../../services/player";
 import { ITrack } from "../../services/track";
 import { Details } from "./Details";
@@ -8,9 +9,10 @@ import styles from "./MainPlayList.module.css";
 interface IProps {
   tracks: ITrack[];
   time?: Date[];
+  albumCover?: string;
 }
 
-export const MainPlayList = ({ tracks, time }: IProps) => {
+export const MainPlayList = ({ tracks, time, albumCover }: IProps) => {
   const [selectedRowIndex, setSelectedRowIndex] = useState<number>(-1);
   const {
     queue,
@@ -21,6 +23,7 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
     removeTrack,
     addTrack,
   } = usePlayer();
+  const history = useHistory();
 
   const trackClick = (track: ITrack) => {
     const isAlbumInQueue = queue?.some((value) => value.id === track.id);
@@ -51,7 +54,7 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
         const isSelected = selectedRowIndex === index;
         const isSong = track.sourceUrl === null;
         const icon = isActive
-          ? "/assets/img/volume.svg"
+          ? "/assets/img/played.svg"
           : "/assets/img/play.svg";
 
         return (
@@ -81,7 +84,7 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
 
                 <img
                   className={styles.album}
-                  src={track.albumCover}
+                  src={track.albumCover ? track.albumCover : albumCover}
                   alt="album"
                 />
 
@@ -89,15 +92,29 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
               </div>
 
               <div className={styles.info}>
-                <p className={styles.artists}>
+                <div className={styles.artists}>
                   {track.artists.map((item, index, array) => (
-                    <span key={item.name}>
-                      {index === array.length - 1
-                        ? item.name
-                        : item.name.concat(", ")}
-                    </span>
+                    <p key={item.name}>
+                      {index === array.length - 1 ? (
+                        <span
+                          onClick={() => {
+                            history.push("/application/artist/" + item.id);
+                          }}
+                        >
+                          {item.name}
+                        </span>
+                      ) : (
+                        <span
+                          onClick={() => {
+                            history.push("/application/artist/" + item.id);
+                          }}
+                        >
+                          {item.name.concat(", ")}
+                        </span>
+                      )}
+                    </p>
                   ))}
-                </p>
+                </div>
 
                 {time ? (
                   <Moment locale="en" fromNow>

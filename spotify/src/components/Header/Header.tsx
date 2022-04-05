@@ -35,13 +35,20 @@ export const Header = ({ search, setSearch }: IProps) => {
       .replaceAll("/", " / ")
       .split(/\s+/)
       .map((value) => {
-        return value.trim().length !== 0
-          ? value[0].toUpperCase() + value.substring(1)
-          : "";
-      })
-      .join(" ");
+        if (value.length < 20) {
+          console.log(value);
 
-    setNavigation(navigation);
+          return value.trim().length !== 0
+            ? value[0].toUpperCase() + value.substring(1)
+            : "";
+        }
+      });
+
+    if (navigation[navigation.length - 1] == undefined) {
+      navigation.splice(-2, 3);
+    }
+
+    setNavigation(navigation.join(" "));
   }, [location]);
 
   return (

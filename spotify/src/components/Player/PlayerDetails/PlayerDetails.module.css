@@ -33,6 +33,11 @@
   font-size: 14px;
   line-height: 19px;
   color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+}
+
+.artist:hover {
+  text-decoration: underline;
 }
 
 .like {

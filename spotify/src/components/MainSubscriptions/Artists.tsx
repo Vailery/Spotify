@@ -2,6 +2,7 @@ import styles from "./MainSubscriptions.module.css";
 import { Palette } from "react-palette";
 import { IArtistInfo } from "../../services/subscriptions";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 interface IProps {
   item: IArtistInfo;
@@ -9,6 +10,7 @@ interface IProps {
 
 export const Artists = ({ item }: IProps) => {
   const [isHover, setIsHover] = useState(false);
+  const history = useHistory();
 
   return (
     <Palette src={item.avatar}>
@@ -19,6 +21,9 @@ export const Artists = ({ item }: IProps) => {
           }}
           onMouseLeave={() => {
             setIsHover(false);
+          }}
+          onClick={() => {
+            history.push("/application/artist/" + item.id);
           }}
           className={styles.artist}
           style={
