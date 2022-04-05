@@ -58,7 +58,7 @@ export const Artist = () => {
 
       setAlbums((albums) => albums.concat(response));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

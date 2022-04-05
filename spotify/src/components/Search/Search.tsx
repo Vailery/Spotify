@@ -30,7 +30,7 @@ export const Search = ({ search }: IProps) => {
       setArtists(() => response.artist);
       setTracks(() => response.tracks);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

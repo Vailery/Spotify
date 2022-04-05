@@ -6,7 +6,6 @@ import { TrackControls } from "./TrackControls/TrackControls";
 
 export const Player = () => {
   const { currentTrack } = usePlayer();
-  console.log(currentTrack);
 
   return (
     <>
