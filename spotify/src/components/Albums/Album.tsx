@@ -41,7 +41,7 @@ export const Album = ({ item }: IProps) => {
         <p>{item.name}</p>
 
         {item.artists.map((item, index, array) => (
-          <p key={item.name}>
+          <p key={item.name + index}>
             {index === array.length - 1 ? item.name : item.name.concat(", ")}
           </p>
         ))}

@@ -9,8 +9,8 @@ interface IProps {
 export const MainSubscriptions = ({ subscr }: IProps) => {
   return (
     <div className={styles.main}>
-      {subscr.map((item) => (
-        <Artists key={item.id} item={item} />
+      {subscr.map((item, index) => (
+        <Artists key={item.id + index} item={item} />
       ))}
     </div>
   );

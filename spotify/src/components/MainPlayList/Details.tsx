@@ -5,9 +5,10 @@ import styles from "./MainPlayList.module.css";
 
 interface IProps {
   track: ITrack;
+  albumCover?: string;
 }
 
-export const Details = ({ track }: IProps) => {
+export const Details = ({ track, albumCover }: IProps) => {
   const [isShowModal, setIsShowModal] = useState(false);
   const modalRef = useRef<HTMLElement>(null);
 
@@ -62,6 +63,7 @@ export const Details = ({ track }: IProps) => {
           setIsShowModal(!isShowModal);
         }}
         refModal={modalRef}
+        albumCover={albumCover}
       />
       <div
         className={styles.blockApp}

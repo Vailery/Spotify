@@ -114,6 +114,10 @@
   text-align: end;
 }
 
+.artists span {
+  margin-right: 5px;
+}
+
 .artists span:hover {
   text-decoration: underline;
 }

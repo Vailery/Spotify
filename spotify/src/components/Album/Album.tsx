@@ -82,25 +82,16 @@ export const Album = () => {
                 <div className={styles.mainInfo}>
                   <div className={styles.profile}>
                     {currentAlbum.artists.map((item, index, array) => (
-                      <p key={item.name}>
-                        {index === array.length - 1 ? (
-                          <span
-                            onClick={() => {
-                              history.push("/application/artist/" + item.id);
-                            }}
-                          >
-                            {item.name}
-                          </span>
-                        ) : (
-                          <span
-                            onClick={() => {
-                              history.push("/application/artist/" + item.id);
-                            }}
-                          >
-                            {item.name.concat(", ")}
-                          </span>
-                        )}
-                      </p>
+                      <span
+                        key={item.name}
+                        onClick={() => {
+                          history.push("/application/artist/" + item.id);
+                        }}
+                      >
+                        {index === array.length - 1
+                          ? item.name
+                          : item.name.concat(",")}
+                      </span>
                     ))}
                   </div>
 
@@ -127,7 +118,7 @@ export const Album = () => {
         <Title textTitle="Tracks" />
 
         <div className={styles.playlist}>
-          <MainPlayList tracks={tracks} albumCover={currentAlbum.cover} />
+          <MainPlayList tracks={tracks} />
         </div>
       </div>
     </div>

@@ -9,10 +9,9 @@ import styles from "./MainPlayList.module.css";
 interface IProps {
   tracks: ITrack[];
   time?: Date[];
-  albumCover?: string;
 }
 
-export const MainPlayList = ({ tracks, time, albumCover }: IProps) => {
+export const MainPlayList = ({ tracks, time }: IProps) => {
   const [selectedRowIndex, setSelectedRowIndex] = useState<number>(-1);
   const {
     queue,
@@ -22,6 +21,7 @@ export const MainPlayList = ({ tracks, time, albumCover }: IProps) => {
     favoriteTracks,
     removeTrack,
     addTrack,
+    currentAlbum,
   } = usePlayer();
   const history = useHistory();
 
@@ -58,7 +58,7 @@ export const MainPlayList = ({ tracks, time, albumCover }: IProps) => {
           : "/assets/img/play.svg";
 
         return (
-          <div className={styles.mainTrack} key={track.id}>
+          <div className={styles.mainTrack} key={track.id + index}>
             <div
               className={`${styles.track} 
               ${isActive ? styles.active : styles.inactive} 
@@ -84,7 +84,9 @@ export const MainPlayList = ({ tracks, time, albumCover }: IProps) => {
 
                 <img
                   className={styles.album}
-                  src={track.albumCover ? track.albumCover : albumCover}
+                  src={
+                    track.albumCover ? track.albumCover : currentAlbum?.cover
+                  }
                   alt="album"
                 />
 
@@ -94,25 +96,16 @@ export const MainPlayList = ({ tracks, time, albumCover }: IProps) => {
               <div className={styles.info}>
                 <div className={styles.artists}>
                   {track.artists.map((item, index, array) => (
-                    <p key={item.name}>
-                      {index === array.length - 1 ? (
-                        <span
-                          onClick={() => {
-                            history.push("/application/artist/" + item.id);
-                          }}
-                        >
-                          {item.name}
-                        </span>
-                      ) : (
-                        <span
-                          onClick={() => {
-                            history.push("/application/artist/" + item.id);
-                          }}
-                        >
-                          {item.name.concat(", ")}
-                        </span>
-                      )}
-                    </p>
+                    <span
+                      key={item.name + index}
+                      onClick={() => {
+                        history.push("/application/artist/" + item.id);
+                      }}
+                    >
+                      {index === array.length - 1
+                        ? item.name
+                        : item.name.concat(",")}
+                    </span>
                   ))}
                 </div>
 
@@ -145,7 +138,7 @@ export const MainPlayList = ({ tracks, time, albumCover }: IProps) => {
                   }}
                 />
 
-                <Details track={track} />
+                <Details track={track} albumCover={currentAlbum?.cover} />
               </div>
             </div>
 

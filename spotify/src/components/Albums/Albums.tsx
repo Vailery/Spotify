@@ -9,8 +9,8 @@ interface IProps {
 export const Albums = ({ albums }: IProps) => {
   return (
     <div className={styles.main}>
-      {albums.map((item) => (
-        <Album key={item.id} item={item} />
+      {albums.map((item, index) => (
+        <Album key={item.id + index} item={item} />
       ))}
     </div>
   );

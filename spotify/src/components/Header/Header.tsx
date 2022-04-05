@@ -36,8 +36,6 @@ export const Header = ({ search, setSearch }: IProps) => {
       .split(/\s+/)
       .map((value) => {
         if (value.length < 20) {
-          console.log(value);
-
           return value.trim().length !== 0
             ? value[0].toUpperCase() + value.substring(1)
             : "";
