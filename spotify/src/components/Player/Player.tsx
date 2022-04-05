@@ -12,10 +12,10 @@ export const Player = () => {
       {currentTrack ? (
         <div className={styles.player} id="player">
           <PlayerDetails
-            isLiked={false}
             artist={currentTrack.artists[0].name}
             cover={currentTrack.albumCover}
             title={currentTrack.title}
+            track={currentTrack}
           />
 
           <PlayerControls />

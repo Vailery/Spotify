@@ -1,20 +1,20 @@
-import styles from "./MainSubscriptions.module.css";
-import { IArtistInfo } from "../../services/subscriptions";
-import { Artists } from "./Artists";
+import styles from "./Albums.module.css";
+import { IAlbum } from "../../services/album";
+import { Album } from "./Album";
 import { useContext } from "react";
 import { ThemeContext } from "../../services/ThemeContext";
 
 interface IProps {
-  subscr: IArtistInfo[];
+  albums: IAlbum[];
 }
 
-export const MainSubscriptions = ({ subscr }: IProps) => {
+export const Albums = ({ albums }: IProps) => {
   const { theme } = useContext(ThemeContext);
 
-  return subscr ? (
+  return albums.length !== 0 ? (
     <div className={styles.main}>
-      {subscr.map((item, index) => (
-        <Artists key={item.id + index} item={item} />
+      {albums.map((item, index) => (
+        <Album key={item.id + index} item={item} />
       ))}
     </div>
   ) : (
@@ -25,7 +25,7 @@ export const MainSubscriptions = ({ subscr }: IProps) => {
           color: theme.grayText,
         }}
       >
-        No subscriptions...
+        No albums...
       </p>
     </div>
   );

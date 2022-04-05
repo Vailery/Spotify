@@ -1,6 +1,7 @@
-// import { render } from "react";
-import { ReactNode, useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
+import { ReactNode, useContext, useEffect, useState } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Album } from "../components/Album/Album";
+import { Artist } from "../components/Artist/Artist";
 import { Error } from "../components/Error/Error";
 import { SessionError } from "../components/Error/SessionError";
 import { FavoriteSongs } from "../components/FavoriteSongs/FavoriteSongs";
@@ -11,13 +12,17 @@ import { Loader } from "../components/Loader/Loader";
 import { Player } from "../components/Player/Player";
 import { RecentPlayed } from "../components/RecentPlayed/RecentPlayed";
 import { RightMenu } from "../components/RightMenu/RightMenu";
+import { Search } from "../components/Search/Search";
 import { PlayerProvider } from "../services/player";
+import { ThemeContext } from "../services/ThemeContext";
 import { getCurrentUser, IUserInfo } from "../services/userApi";
 import styles from "./Application.module.css";
 
 export const Application = () => {
   const [user, setUser] = useState<IUserInfo>();
   const [error, setError] = useState<ReactNode>();
+  const [search, setSearch] = useState("");
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     getCurrentUser()
@@ -41,8 +46,13 @@ export const Application = () => {
       <BrowserRouter>
         <PlayerProvider>
           <LeftMenu />
-          <div className={styles.main}>
-            <Header />
+          <div
+            className={styles.main}
+            style={{
+              background: theme.darkBckgColor,
+            }}
+          >
+            <Header search={search} setSearch={setSearch} />
             <Switch>
               <Route path="/application/" exact>
                 <Home user={user} />
@@ -64,6 +74,19 @@ export const Application = () => {
                 path="/application/recent_played"
                 exact
                 component={RecentPlayed}
+              />
+              <Route path="/application/search">
+                <Search search={search} />
+              </Route>
+              <Route
+                path="/application/artist/:artistId"
+                exact
+                component={Artist}
+              />
+              <Route
+                path="/application/album/:albumId"
+                exact
+                component={Album}
               />
               <Route path="*" component={Error} />
             </Switch>

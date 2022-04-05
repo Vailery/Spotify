@@ -44,7 +44,7 @@
   display: block;
 }
 
-.track.nosong {
+.mainInfo.nosong {
   pointer-events: none;
   opacity: 0.4;
   filter: brightness(0.8) grayscale(1);
@@ -111,6 +111,15 @@
 .artists,
 .info time {
   margin-right: 70px;
+  text-align: end;
+}
+
+.artists span {
+  margin-right: 5px;
+}
+
+.artists span:hover {
+  text-decoration: underline;
 }
 
 .duration {
@@ -155,7 +164,8 @@
   margin-left: 48px;
 }
 
-.like {
+.like:hover,
+.like.active {
   filter: sepia(100%) saturate(2000%) hue-rotate(100deg) brightness(1);
 }
 
@@ -168,4 +178,13 @@
   background-color: rgba(18, 18, 18, 0.719);
   z-index: 4;
   pointer-events: none;
+}
+
+.error {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 27px;
+  color: rgba(255, 255, 255, 0.72);
 }

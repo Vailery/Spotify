@@ -1,5 +1,6 @@
 import { usePalette } from "react-palette";
 import { IArtist } from "../../services/artist";
+import { usePlayer } from "../../services/player";
 import styles from "./Modal.module.css";
 
 interface IProps {
@@ -15,10 +16,17 @@ interface IModal {
   isShow: boolean;
   onClick: () => void;
   refModal: any;
+  albumCover?: string;
 }
 
-export const Modal = ({ item, isShow, onClick, refModal }: IModal) => {
-  const { data } = usePalette(item.albumCover);
+export const Modal = ({
+  item,
+  isShow,
+  onClick,
+  refModal,
+  albumCover,
+}: IModal) => {
+  const { data } = usePalette(item.albumCover ? item.albumCover : albumCover!);
   let date = new Date(item.albumReleaseDate);
   let releaseDate = `${date.getDate()} ${date.toLocaleString("en-us", {
     month: "short",

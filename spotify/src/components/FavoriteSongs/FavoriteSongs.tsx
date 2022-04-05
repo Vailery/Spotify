@@ -1,42 +1,38 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { PlayerStatus } from "../../constants/player-status";
 import { usePlayer } from "../../services/player";
-import { ITrack } from "../../services/track";
-import { getUserTracksLibrary } from "../../services/userPlaylist";
+import { ThemeContext } from "../../services/ThemeContext";
 import { MainPlayList } from "../MainPlayList/MainPlayList";
 import { Title } from "../Title/Title";
 import styles from "./FavoriteSongs.module.css";
 
 export const FavoriteSongs = () => {
-  const { playTrack, playerStatus, currentTrack, queue, replaceQueue } =
-    usePlayer();
-  const [tracks, setTracks] = useState<ITrack[]>([]);
-
-  const loadLibrary = async () => {
-    const offset = tracks.length;
-
-    try {
-      const response = await getUserTracksLibrary(offset);
-
-      setTracks((tracks) => tracks.concat(response));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const {
+    playTrack,
+    playerStatus,
+    currentTrack,
+    queue,
+    replaceQueue,
+    favoriteTracks,
+  } = usePlayer();
+  const { theme } = useContext(ThemeContext);
 
   const isTracksInQueue = useMemo(
     () =>
-      tracks.every((track) => queue?.some((value) => value.id === track.id)) ??
-      false,
-    [tracks, queue]
+      favoriteTracks.every((track) =>
+        queue?.some((value) => value.id === track.id)
+      ) ?? false,
+    [favoriteTracks, queue]
   );
 
   const playPauseClick = () => {
     if (!isTracksInQueue) {
-      replaceQueue(tracks);
+      replaceQueue(favoriteTracks);
     }
 
-    const newTracks = tracks.filter((track) => track.sourceUrl !== null);
+    const newTracks = favoriteTracks.filter(
+      (track) => track.sourceUrl !== null
+    );
     const trackToPlay = isTracksInQueue ? currentTrack : newTracks[0];
 
     playTrack(trackToPlay!);
@@ -47,12 +43,13 @@ export const FavoriteSongs = () => {
       ? "Play"
       : "Pause";
 
-  useEffect(() => {
-    loadLibrary();
-  }, []);
-
-  return (
-    <div className={styles.main}>
+  return favoriteTracks.length !== 0 ? (
+    <div
+      className={styles.main}
+      style={{
+        backgroundColor: theme.darkBckgColor,
+      }}
+    >
       <Title
         textTitle="Favorite Songs"
         textButton={text}
@@ -62,8 +59,24 @@ export const FavoriteSongs = () => {
       />
 
       <div className={styles.playlist}>
-        <MainPlayList tracks={tracks} />
+        <MainPlayList tracks={favoriteTracks} />
       </div>
+    </div>
+  ) : (
+    <div
+      className={styles.main}
+      style={{
+        backgroundColor: theme.darkBckgColor,
+      }}
+    >
+      <p
+        className={styles.error}
+        style={{
+          color: theme.grayText,
+        }}
+      >
+        No tracks...
+      </p>
     </div>
   );
 };

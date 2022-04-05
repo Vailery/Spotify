@@ -46,3 +46,19 @@ export const parseTrackData =
       albumReleaseDate,
     };
   };
+
+export const parseAlbumTrackData = (data: ITrackData) => {
+  const title = data.name;
+  const sourceUrl = data.preview_url;
+  const id = data.id;
+  const artists = data.artists.map(parseArtistData);
+  const duration = data.duration_ms;
+
+  return {
+    id,
+    title,
+    sourceUrl,
+    artists,
+    duration,
+  };
+};

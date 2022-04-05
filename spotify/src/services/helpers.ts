@@ -23,7 +23,7 @@ export const spotifyFetch = async (endpoint: string) => {
       return resp;
     },
     async function (error) {
-      if (error.response.status == 401) {
+      if (error.response.status === 401) {
         await refreshAccessToken();
         return axiosApi.request({
           ...error.config,
@@ -34,7 +34,72 @@ export const spotifyFetch = async (endpoint: string) => {
     }
   );
 
-  return axiosApi.get(endpoint).then((response) => response.data);
+  return axiosApi
+    .get(endpoint)
+    .then((response) => response.data)
+    .catch((err) => console.error(err));
+};
+
+export const spotifyPutFetch = async (endpoint: string) => {
+  const generateHeaders = () => {
+    return {
+      Authorization: `Bearer ${getAccessToken()}`,
+    };
+  };
+
+  const axiosApi = axios.create({
+    baseURL: process.env.REACT_APP_BASE_URL,
+    headers: generateHeaders(),
+  });
+
+  axiosApi.interceptors.response.use(
+    (resp) => {
+      return resp;
+    },
+    async function (error) {
+      if (error.response.status === 401) {
+        await refreshAccessToken();
+        return axiosApi.request({
+          ...error.config,
+          headers: generateHeaders(),
+        });
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  return axiosApi.put(endpoint).catch((err) => console.error(err));
+};
+
+export const spotifyDeleteFetch = async (endpoint: string) => {
+  const generateHeaders = () => {
+    return {
+      Authorization: `Bearer ${getAccessToken()}`,
+    };
+  };
+
+  const axiosApi = axios.create({
+    baseURL: process.env.REACT_APP_BASE_URL,
+    headers: generateHeaders(),
+  });
+
+  axiosApi.interceptors.response.use(
+    (resp) => {
+      return resp;
+    },
+    async function (error) {
+      if (error.response.status === 401) {
+        await refreshAccessToken();
+        return axiosApi.request({
+          ...error.config,
+          headers: generateHeaders(),
+        });
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  return axiosApi.delete(endpoint).catch((err) => console.error(err));
 };
 
 const refreshAccessToken = async () => {
@@ -44,13 +109,15 @@ const refreshAccessToken = async () => {
   formData.append("refresh_token", getRefreshToken());
 
   return new Promise((resolve, reject) => {
-    spotifyTokenFetch(formData).then((data) => {
-      const accessToken = data.data.access_token;
+    spotifyTokenFetch(formData)
+      .then((data) => {
+        const accessToken = data.data.access_token;
 
-      updateAccessToken(accessToken, () => {
-        resolve(null);
-      });
-    });
+        updateAccessToken(accessToken, () => {
+          resolve(null);
+        });
+      })
+      .catch((err) => console.error(err));
   });
 };
 
@@ -85,14 +152,19 @@ export const setRefreshTokenFromCode = async (
   formData.append("code", code);
   formData.append("redirect_uri", process.env.REACT_APP_CALLBACK_URL!);
 
-  return spotifyTokenFetch(formData).then((data) => {
-    const refreshToken = data.data.refresh_token;
-    const accessToken = data.data.access_token;
+  return spotifyTokenFetch(formData)
+    .then((data) => {
+      const refreshToken = data.data.refresh_token;
+      const accessToken = data.data.access_token;
 
-    updateRefreshToken(refreshToken, () => {
-      updateAccessToken(accessToken, callback);
+      updateRefreshToken(refreshToken, () => {
+        updateAccessToken(accessToken, callback);
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      window.location.href = `${process.env.REACT_APP_BASE_APP_URL}`;
     });
-  });
 };
 
 export const musixMatchFetch = async (endpoint: string) => {
@@ -104,5 +176,6 @@ export const musixMatchFetch = async (endpoint: string) => {
       )}`,
     })
     .get("")
-    .then((response) => response.data);
+    .then((response) => response.data)
+    .catch((err) => console.error(err));
 };

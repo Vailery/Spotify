@@ -1,15 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { ThemeContext } from "../../services/ThemeContext";
 import { ITrack } from "../../services/track";
 import { Modal } from "../Modal/Modal";
 import styles from "./MainPlayList.module.css";
 
 interface IProps {
   track: ITrack;
+  albumCover?: string;
 }
 
-export const Details = ({ track }: IProps) => {
+export const Details = ({ track, albumCover }: IProps) => {
   const [isShowModal, setIsShowModal] = useState(false);
   const modalRef = useRef<HTMLElement>(null);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const pageClickEvent = (e: any) => {
@@ -50,9 +53,18 @@ export const Details = ({ track }: IProps) => {
           onClick={() => {
             setIsShowModal(!isShowModal);
           }}
+          style={{
+            filter: theme.filter,
+          }}
         />
 
-        <p>Details</p>
+        <p
+          style={{
+            color: theme.lightText,
+          }}
+        >
+          Details
+        </p>
       </div>
 
       <Modal
@@ -62,6 +74,7 @@ export const Details = ({ track }: IProps) => {
           setIsShowModal(!isShowModal);
         }}
         refModal={modalRef}
+        albumCover={albumCover}
       />
       <div
         className={styles.blockApp}
