@@ -95,3 +95,12 @@
 .playlist {
   margin-bottom: 10%;
 }
+
+.error {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 27px;
+  color: rgba(255, 255, 255, 0.72);
+}

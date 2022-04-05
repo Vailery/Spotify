@@ -47,7 +47,7 @@ export const RecentPlayed = () => {
     setTracks(recentQueue);
   }, [recentQueue]);
 
-  return (
+  return recentQueue.length !== 0 ? (
     <div
       className={styles.main}
       style={{
@@ -65,6 +65,22 @@ export const RecentPlayed = () => {
       <div className={styles.playlist}>
         <MainPlayList tracks={tracks} time={timeRecentQueue} />
       </div>
+    </div>
+  ) : (
+    <div
+      className={styles.main}
+      style={{
+        backgroundColor: theme.darkBckgColor,
+      }}
+    >
+      <p
+        className={styles.error}
+        style={{
+          color: theme.grayText,
+        }}
+      >
+        No tracks...
+      </p>
     </div>
   );
 };

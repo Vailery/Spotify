@@ -153,6 +153,20 @@ export const Artist = () => {
       </div>
     </div>
   ) : (
-    <></>
+    <div
+      className={styles.main}
+      style={{
+        backgroundColor: theme.darkBckgColor,
+      }}
+    >
+      <p
+        className={styles.error}
+        style={{
+          color: theme.grayText,
+        }}
+      >
+        No artist...
+      </p>
+    </div>
   );
 };

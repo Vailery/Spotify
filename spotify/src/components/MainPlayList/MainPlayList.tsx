@@ -46,7 +46,7 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
     return `${date.getMinutes()}:${sec}`;
   };
 
-  return (
+  return tracks.length !== 0 ? (
     <div className={styles.main}>
       {tracks.map((track, index) => {
         const isInFavorite = favoriteTracks.some(
@@ -180,6 +180,17 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
           </div>
         );
       })}
+    </div>
+  ) : (
+    <div className={styles.track}>
+      <p
+        className={styles.error}
+        style={{
+          color: theme.grayText,
+        }}
+      >
+        No tracks...
+      </p>
     </div>
   );
 };

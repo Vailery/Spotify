@@ -2,12 +2,8 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { Palette } from "react-palette";
 import { useHistory, useParams } from "react-router-dom";
 import { PlayerStatus } from "../../constants/player-status";
-import { IAlbum } from "../../services/album";
 import { usePlayer } from "../../services/player";
-import {
-  getAlbumTracks,
-  getInfoAboutArtistAlbum,
-} from "../../services/subscriptions";
+import { getAlbumTracks } from "../../services/subscriptions";
 import { ThemeContext } from "../../services/ThemeContext";
 import { ITrack } from "../../services/track";
 import { Banner } from "../Banner/Banner";
@@ -130,6 +126,20 @@ export const Album = () => {
       </div>
     </div>
   ) : (
-    <></>
+    <div
+      className={styles.main}
+      style={{
+        backgroundColor: theme.darkBckgColor,
+      }}
+    >
+      <p
+        className={styles.error}
+        style={{
+          color: theme.grayText,
+        }}
+      >
+        No album...
+      </p>
+    </div>
   );
 };

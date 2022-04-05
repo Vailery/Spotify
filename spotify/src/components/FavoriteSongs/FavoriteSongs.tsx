@@ -43,7 +43,7 @@ export const FavoriteSongs = () => {
       ? "Play"
       : "Pause";
 
-  return (
+  return favoriteTracks.length !== 0 ? (
     <div
       className={styles.main}
       style={{
@@ -61,6 +61,22 @@ export const FavoriteSongs = () => {
       <div className={styles.playlist}>
         <MainPlayList tracks={favoriteTracks} />
       </div>
+    </div>
+  ) : (
+    <div
+      className={styles.main}
+      style={{
+        backgroundColor: theme.darkBckgColor,
+      }}
+    >
+      <p
+        className={styles.error}
+        style={{
+          color: theme.grayText,
+        }}
+      >
+        No tracks...
+      </p>
     </div>
   );
 };
