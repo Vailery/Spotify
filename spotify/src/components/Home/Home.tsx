@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { usePalette } from "react-palette";
 import { useHistory } from "react-router-dom";
 import { PlayerStatus } from "../../constants/player-status";
 import { usePlayer } from "../../services/player";
 import { IArtistInfo } from "../../services/subscriptions";
+import { ThemeContext } from "../../services/ThemeContext";
 import { ITrack } from "../../services/track";
 import { IUserInfo } from "../../services/userApi";
 import {
@@ -24,6 +25,7 @@ interface IProps {
 export const Home = ({ user }: IProps) => {
   const { playTrack, playerStatus, currentTrack, queue, replaceQueue } =
     usePlayer();
+  const { theme } = useContext(ThemeContext);
   const { data } = usePalette(user.avatarUrl);
   const [tracks, setTracks] = useState<ITrack[]>([]);
   const [subscriptions, setSubscriptions] = useState<IArtistInfo[]>([]);
@@ -87,7 +89,12 @@ export const Home = ({ user }: IProps) => {
   }, [subscLimit]);
 
   return (
-    <div className={styles.home}>
+    <div
+      className={styles.home}
+      style={{
+        backgroundColor: theme.darkBckgColor,
+      }}
+    >
       <Banner
         bgColor={`linear-gradient(300deg, ${data.muted}, ${data.darkMuted})`}
       >
@@ -98,17 +105,53 @@ export const Home = ({ user }: IProps) => {
         <div className={styles.mainInfo}>
           <p className={styles.profile}>
             <img src="/assets/img/premium.svg" alt="premium" />{" "}
-            <span>Premium</span>
+            <span
+              style={{
+                color: theme.grayText,
+              }}
+            >
+              Premium
+            </span>
           </p>
 
-          <h2>{user.name}</h2>
+          <h2
+            style={{
+              color: theme.lightText,
+            }}
+          >
+            {user.name}
+          </h2>
 
-          <p className={styles.subscriptions}>
-            <img src="/assets/img/headphone.svg" alt="headphone" />
-            <span>{totalSubscr}</span> subscriptions
+          <p
+            className={styles.subscriptions}
+            style={{
+              color: theme.grayText,
+            }}
+          >
+            <img
+              src="/assets/img/headphone.svg"
+              alt="headphone"
+              style={{
+                filter: theme.filter,
+              }}
+            />
+            <span
+              style={{
+                color: theme.lightText,
+              }}
+            >
+              {totalSubscr}
+            </span>{" "}
+            subscriptions
           </p>
 
-          <Button text={text} onClick={playPauseClick} />
+          <Button
+            text={text}
+            onClick={playPauseClick}
+            style={{
+              color: theme.lightText,
+            }}
+          />
         </div>
       </Banner>
 

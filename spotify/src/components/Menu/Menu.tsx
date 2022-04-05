@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { ThemeContext } from "../../services/ThemeContext";
 import styles from "./Menu.module.css";
 
 export interface IMenuListState {
@@ -14,16 +16,36 @@ interface IMenuState {
 }
 
 export const Menu = ({ title, svg, list }: IMenuState) => {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <div className={styles.menu}>
       {title && svg ? (
         <div className={styles.menuContainer}>
-          <p>{title}</p>
-          <img src={svg} alt="add-button" />
+          <p
+            style={{
+              color: theme.grayText,
+            }}
+          >
+            {title}
+          </p>
+          <img
+            src={svg}
+            alt="add-button"
+            style={{
+              filter: theme.filter,
+            }}
+          />
         </div>
       ) : title ? (
         <div className={styles.menuContainer}>
-          <p>{title}</p>
+          <p
+            style={{
+              color: theme.grayText,
+            }}
+          >
+            {title}
+          </p>
         </div>
       ) : null}
 
@@ -39,8 +61,20 @@ export const Menu = ({ title, svg, list }: IMenuState) => {
                 }}
                 activeClassName={styles.active}
               >
-                <img src={item.img} alt={item.title} />
-                <span>{item.title}</span>
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  style={{
+                    filter: theme.filter,
+                  }}
+                />
+                <span
+                  style={{
+                    color: theme.grayText,
+                  }}
+                >
+                  {item.title}
+                </span>
               </NavLink>
             </li>
           ))}

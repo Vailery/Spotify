@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { clearSession } from "../../services/authentication";
+import { ThemeContext } from "../../services/ThemeContext";
 import styles from "./DropdownMenu.module.css";
 
 interface IProps {
@@ -9,6 +10,7 @@ interface IProps {
 }
 
 export const DropdownMenu = ({ avatar, name }: IProps) => {
+  const { theme } = useContext(ThemeContext);
   const dropdownRef = useRef<HTMLElement>(null);
   const [isActive, setIsActive] = useState(false);
   const onClick = () => setIsActive(!isActive);
@@ -49,9 +51,21 @@ export const DropdownMenu = ({ avatar, name }: IProps) => {
           </div>
 
           <div className={styles.userStatus}>
-            <p className={styles.name}>{name}</p>
+            <p
+              className={styles.name}
+              style={{
+                color: theme.lightText,
+              }}
+            >
+              {name}
+            </p>
 
-            <p className={styles.status}>
+            <p
+              className={styles.status}
+              style={{
+                color: theme.grayText,
+              }}
+            >
               Premium <span>•</span>{" "}
               <img src="/assets/img/premium.svg" alt="avatar" />
             </p>
@@ -64,6 +78,9 @@ export const DropdownMenu = ({ avatar, name }: IProps) => {
           }`}
           src="/assets/img/small-arrow.svg"
           alt="arrow"
+          style={{
+            filter: theme.filter,
+          }}
         />
       </div>
 
@@ -72,10 +89,20 @@ export const DropdownMenu = ({ avatar, name }: IProps) => {
         className={`${styles.menu} ${
           isActive ? styles.active : styles.inactive
         }`}
+        style={{
+          background: theme.darkBckgColor,
+        }}
       >
         <ul>
           <li>
-            <p onClick={goTo}>Quit</p>
+            <p
+              onClick={goTo}
+              style={{
+                color: theme.lightText,
+              }}
+            >
+              Quit
+            </p>
           </li>
         </ul>
       </nav>

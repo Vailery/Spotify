@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Moment from "react-moment";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { usePlayer } from "../../services/player";
+import { ThemeContext } from "../../services/ThemeContext";
 import { ITrack } from "../../services/track";
 import { Details } from "./Details";
 import styles from "./MainPlayList.module.css";
@@ -23,6 +24,7 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
     addTrack,
     currentAlbum,
   } = usePlayer();
+  const { theme } = useContext(ThemeContext);
   const history = useHistory();
 
   const trackClick = (track: ITrack) => {
@@ -70,7 +72,14 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
               ${isSong ? styles.nosong : styles.song}`}
               >
                 <div className={styles.playButton}>
-                  <p className={styles.number}>{index + 1}</p>
+                  <p
+                    className={styles.number}
+                    style={{
+                      color: theme.lightText,
+                    }}
+                  >
+                    {index + 1}
+                  </p>
 
                   <img
                     className={styles.play}
@@ -78,6 +87,9 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
                     alt="play"
                     onClick={() => {
                       trackClick(track);
+                    }}
+                    style={{
+                      filter: theme.filter,
                     }}
                   />
                 </div>
@@ -90,11 +102,23 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
                   alt="album"
                 />
 
-                <p className={styles.title}>{track.title}</p>
+                <p
+                  className={styles.title}
+                  style={{
+                    color: theme.lightText,
+                  }}
+                >
+                  {track.title}
+                </p>
               </div>
 
               <div className={styles.info}>
-                <div className={styles.artists}>
+                <div
+                  className={styles.artists}
+                  style={{
+                    color: theme.lightText,
+                  }}
+                >
                   {track.artists.map((item, index, array) => (
                     <span
                       key={item.name + index}
@@ -121,9 +145,19 @@ export const MainPlayList = ({ tracks, time }: IProps) => {
                   className={styles.clock}
                   src="/assets/img/clock.svg"
                   alt="clock"
+                  style={{
+                    filter: theme.filter,
+                  }}
                 />
 
-                <p className={styles.duration}>{duration(track.duration)}</p>
+                <p
+                  className={styles.duration}
+                  style={{
+                    color: theme.lightText,
+                  }}
+                >
+                  {duration(track.duration)}
+                </p>
 
                 <img
                   className={`${styles.like} ${

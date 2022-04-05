@@ -22,7 +22,7 @@ export const Search = ({ search }: IProps) => {
   const [loadAlbumsOffset, setLoadAlbumsOffset] = useState<number>(0);
   const [loadArtistsOffset, setLoadArtistsOffset] = useState<number>(0);
   const history = useHistory();
-  const limit = 10;
+  const limit = 5;
 
   const loadMoreSongs = async () => {
     try {

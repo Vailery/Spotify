@@ -6,6 +6,8 @@ import moment from "moment";
 import styles from "./RightMenu.module.css";
 import { Title } from "../Title/Title";
 import { useHistory } from "react-router-dom";
+import { useContext } from "react";
+import { ThemeContext } from "../../services/ThemeContext";
 
 interface IProps {
   user: IUserInfo;
@@ -32,39 +34,84 @@ moment.locale("en", {
 
 export const RightMenu = ({ user }: IProps) => {
   const { recentQueue, timeRecentQueue, currentTrack } = usePlayer();
+  const { theme } = useContext(ThemeContext);
   const history = useHistory();
 
   return (
-    <div className={styles.rightMenu}>
+    <div
+      className={styles.rightMenu}
+      style={{
+        background: theme.lightBckgColor,
+      }}
+    >
       <DropdownMenu avatar={user.avatarUrl} name={user.name} />
 
-      <div className={styles.recentPlayed}>
+      <div
+        className={styles.recentPlayed}
+        style={{
+          background: theme.lightBckgColor,
+        }}
+      >
         <Title
           textTitle="Recent Played"
           textButton="See All"
           onClick={() => {
             history.push("/application/recent_played");
           }}
+          style={{
+            background: theme.lightBckgColor,
+          }}
         />
 
         {recentQueue.length !== 0 ? (
-          <div className={styles.tracks}>
+          <div
+            className={styles.tracks}
+            style={{
+              background: theme.lightBckgColor,
+            }}
+          >
             {recentQueue.map((item, index) => {
               const isActive = currentTrack?.id === item.id;
 
               if (index < 7) {
                 return (
-                  <div key={`${item.title} ${index}`} className={styles.songs}>
-                    <div className={styles.mainInfo}>
+                  <div
+                    key={`${item.title} ${index}`}
+                    className={styles.songs}
+                    style={{
+                      background: theme.lightBckgColor,
+                    }}
+                  >
+                    <div
+                      className={styles.mainInfo}
+                      style={{
+                        background: theme.lightBckgColor,
+                      }}
+                    >
                       <img src={item.albumCover} alt={item.albumCover} />
 
                       <div
                         className={`${styles.info} ${
                           isActive ? styles.active : ""
                         } `}
+                        style={{
+                          background: theme.lightBckgColor,
+                        }}
                       >
-                        <p className={styles.infoTitle}>{item.title}</p>
-                        <p className={styles.infoArtists}>
+                        <p
+                          className={styles.infoTitle}
+                          style={{
+                            color: theme.lightText,
+                          }}
+                        >
+                          {item.title}
+                        </p>
+                        <p
+                          className={styles.infoArtists}
+                          style={{
+                            color: theme.grayText,
+                          }}
+                        >
                           {item.artists.map((item, index, array) => (
                             <span key={item.name}>
                               {index === array.length - 1
@@ -76,7 +123,13 @@ export const RightMenu = ({ user }: IProps) => {
                       </div>
                     </div>
 
-                    <Moment locale="en" fromNow>
+                    <Moment
+                      locale="en"
+                      fromNow
+                      style={{
+                        color: theme.grayText,
+                      }}
+                    >
                       {timeRecentQueue[index]}
                     </Moment>
                   </div>
@@ -85,7 +138,14 @@ export const RightMenu = ({ user }: IProps) => {
             })}
           </div>
         ) : (
-          <p className={styles.error}>Start listening smth...</p>
+          <p
+            className={styles.error}
+            style={{
+              color: theme.grayText,
+            }}
+          >
+            Start listening smth...
+          </p>
         )}
       </div>
     </div>

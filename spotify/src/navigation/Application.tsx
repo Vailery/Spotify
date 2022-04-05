@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Album } from "../components/Album/Album";
 import { Artist } from "../components/Artist/Artist";
@@ -14,6 +14,7 @@ import { RecentPlayed } from "../components/RecentPlayed/RecentPlayed";
 import { RightMenu } from "../components/RightMenu/RightMenu";
 import { Search } from "../components/Search/Search";
 import { PlayerProvider } from "../services/player";
+import { ThemeContext } from "../services/ThemeContext";
 import { getCurrentUser, IUserInfo } from "../services/userApi";
 import styles from "./Application.module.css";
 
@@ -21,6 +22,7 @@ export const Application = () => {
   const [user, setUser] = useState<IUserInfo>();
   const [error, setError] = useState<ReactNode>();
   const [search, setSearch] = useState("");
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     getCurrentUser()
@@ -44,7 +46,12 @@ export const Application = () => {
       <BrowserRouter>
         <PlayerProvider>
           <LeftMenu />
-          <div className={styles.main}>
+          <div
+            className={styles.main}
+            style={{
+              background: theme.darkBckgColor,
+            }}
+          >
             <Header search={search} setSearch={setSearch} />
             <Switch>
               <Route path="/application/" exact>
