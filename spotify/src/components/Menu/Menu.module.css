@@ -1,0 +1,99 @@
+.menu {
+  margin: 40px 0 0;
+}
+
+.menuContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0 32px 24px;
+}
+
+.menuContainer p {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.menuContainer img {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+.menu ul {
+  width: 100%;
+  padding: 0px;
+}
+
+.menu ul li {
+  list-style: none;
+  width: 100%;
+  position: relative;
+}
+
+.menu ul li a {
+  text-decoration: none;
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  margin-left: 31px;
+}
+
+.menu ul li a img {
+  width: 24px;
+  height: 24px;
+  filter: invert(1);
+}
+.menu ul li a span {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.72);
+  margin-left: 16px;
+}
+
+.menu ul li a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0px;
+  height: 100%;
+  background: #1db954;
+  border-radius: 3px 0px 0px 3px;
+}
+
+.menu ul li:hover,
+.menu ul li a:is(.active) {
+  background: linear-gradient(
+    270deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.menu ul li:hover a span,
+.menu ul li a.active span {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #ffffff;
+  transition: 0.3s;
+}
+
+.menu ul li a:hover::before {
+  width: 6px;
+  transition: width 0.5s;
+}
+
+.menu ul li a:is(.active)::before {
+  width: 6px;
+  transition: width 0.5s;
+}

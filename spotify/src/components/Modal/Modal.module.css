@@ -1,0 +1,56 @@
+.main {
+  position: fixed;
+  transition: opacity 0.3s ease-in-out;
+  padding: 40px;
+  border-radius: 16px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  cursor: default;
+  width: 40%;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.main p,
+.main span {
+  font-family: "Manrope";
+  font-style: normal;
+  line-height: 27px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.main .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.title img {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+.main .name {
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.main .day,
+.main .albumName,
+.main .performers {
+  font-weight: 700;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.group {
+  margin-bottom: 10px;
+}

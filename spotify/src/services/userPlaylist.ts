@@ -1,0 +1,54 @@
+import { IAlbumData } from "./album";
+import { spotifyDeleteFetch, spotifyFetch, spotifyPutFetch } from "./helpers";
+import { ITrackData, parseTrackData } from "./track";
+import { parseSubscriptionsData } from "./subscriptions";
+
+interface IPlaylist {
+  added_at: string;
+  track: ITrackData & { album: IAlbumData };
+}
+
+export const getUserTracksLibrary = async (
+  offset: number = 0,
+  limit: number = 50
+) => {
+  const endpoint = `/me/tracks/?limit=${limit}&offset=${offset}`;
+  const response = await spotifyFetch(endpoint);
+
+  const tracks = response.items.map((item: IPlaylist) => {
+    const { album } = item.track;
+    const parser = parseTrackData(
+      album.id,
+      album.images[0].url,
+      album.name,
+      album.release_date
+    );
+    return parser(item.track);
+  });
+
+  return tracks;
+};
+
+export const getUserFollowedArtists = async (limit: number = 50) => {
+  const endpoint = `/me/following/?type=artist&limit=${limit}`;
+  const response = await spotifyFetch(endpoint);
+
+  const artist = response.artists.items.map(parseSubscriptionsData);
+  const total = response.artists.total;
+
+  return { artist, total };
+};
+
+export const addNewFavotiteSongs = async (id: string) => {
+  const endpoint = `/me/tracks/?ids=${id}`;
+  const response = await spotifyPutFetch(endpoint);
+
+  return response;
+};
+
+export const removeFavotiteSong = async (id: string) => {
+  const endpoint = `/me/tracks/?ids=${id}`;
+  const response = await spotifyDeleteFetch(endpoint);
+
+  return response;
+};

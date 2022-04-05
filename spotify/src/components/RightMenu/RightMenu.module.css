@@ -1,0 +1,109 @@
+.rightMenu {
+  width: 298px;
+  height: 100%;
+  min-height: 100vh;
+  background: #212121;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  z-index: 2;
+}
+
+.recentPlayed {
+  display: flex;
+  flex-direction: column;
+  margin: 32px 10px;
+  background: #212121;
+}
+
+.recentPlayed div {
+  background: #212121;
+}
+
+.recentPlayed p:first-child {
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.recentPlayed .error {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.tracks {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.tracks .songs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.songs img {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+}
+
+.songs .mainInfo {
+  display: flex;
+}
+
+.songs .info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 13px;
+}
+
+.songs .info p {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 70px;
+}
+
+.info p.infoTitle {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #ffffff;
+}
+
+.info .infoArtists {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.info.active p {
+  color: #1db954;
+}
+
+.songs time {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 550px) {
+  .rightMenu {
+    min-width: 64px;
+    width: 64px;
+  }
+}

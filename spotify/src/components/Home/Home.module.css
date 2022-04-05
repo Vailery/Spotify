@@ -1,0 +1,89 @@
+.home {
+  position: relative;
+  height: 90vh;
+  background-color: #121212;
+  padding: 32px;
+  z-index: 4;
+}
+
+.mainInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 52px 45px 32px 40px;
+}
+
+.mainInfo h2 {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 68px;
+  color: #ffffff;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile span {
+  margin-left: 12px;
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.subscriptions {
+  display: flex;
+  align-items: center;
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.subscriptions img {
+  filter: invert(1);
+}
+
+.subscriptions span {
+  color: #ffffff;
+  font-weight: 600;
+  margin: 0 5px 0 12px;
+}
+
+.photo {
+  width: auto;
+  height: 100%;
+  padding: 15px;
+}
+
+.photo img {
+  border-radius: 50%;
+  margin: 0 10px;
+  width: auto;
+  height: 100%;
+  box-shadow: 0 4px 60px rgb(0 0 0 / 50%);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  height: 100%;
+  position: sticky;
+  top: 0;
+}
+
+.playlist {
+  margin-bottom: 32px;
+}
+
+.subscr {
+  margin-bottom: 30%;
+}

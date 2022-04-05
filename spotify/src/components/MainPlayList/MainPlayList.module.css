@@ -1,0 +1,190 @@
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.mainTrack {
+  padding-right: 8px;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0 16px 8px;
+  cursor: pointer;
+}
+
+.track:hover,
+.track.select {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.12) 35.43%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.track.inactive {
+  color: #ffffff;
+}
+
+.track.active .title,
+.track.active .artists {
+  color: #1db954;
+}
+
+.track:hover .number,
+.track.active .number {
+  visibility: hidden;
+}
+
+.track:hover .play,
+.track.active .play {
+  display: block;
+}
+
+.mainInfo.nosong {
+  pointer-events: none;
+  opacity: 0.4;
+  filter: brightness(0.8) grayscale(1);
+}
+
+.mainTrack:first-of-type {
+  padding-top: 0;
+}
+
+.mainTrack:last-of-type {
+  padding-bottom: 0;
+}
+
+.mainTrack:last-of-type .border {
+  display: none;
+}
+
+.mainInfo {
+  display: flex;
+  align-items: center;
+}
+
+.number,
+.title,
+.artists,
+.duration,
+.info time {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: #ffffff;
+}
+
+.playButton {
+  position: relative;
+  margin-right: 32px;
+}
+
+.playButton .play {
+  position: absolute;
+  filter: invert(1);
+  top: -1px;
+  left: -7px;
+  display: none;
+}
+
+.album {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+}
+
+.title {
+  margin-left: 16px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+}
+
+.artists,
+.info time {
+  margin-right: 70px;
+  text-align: end;
+}
+
+.artists span {
+  margin-right: 5px;
+}
+
+.artists span:hover {
+  text-decoration: underline;
+}
+
+.duration {
+  margin: 0 62px 0 12px;
+}
+
+.clock,
+.like,
+.dots {
+  filter: invert(1);
+}
+
+.details {
+  position: relative;
+}
+
+.details .dots {
+  margin-left: 60px;
+}
+
+.details p {
+  position: absolute;
+  top: 0;
+  right: 0;
+  white-space: nowrap;
+  transform: translateY(-100%);
+  transition: all 0.3s ease;
+  opacity: 0;
+  background: #212121;
+  padding: 10px;
+  border-radius: 16px 16px 0 16px;
+  color: #ffffff;
+}
+
+.details .dots:hover + p {
+  opacity: 1;
+}
+
+.border {
+  height: 1px;
+  border-top: 1px solid #4d4d4d;
+  margin-left: 48px;
+}
+
+.like:hover,
+.like.active {
+  filter: sepia(100%) saturate(2000%) hue-rotate(100deg) brightness(1);
+}
+
+.blockApp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(18, 18, 18, 0.719);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.error {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 27px;
+  color: rgba(255, 255, 255, 0.72);
+}

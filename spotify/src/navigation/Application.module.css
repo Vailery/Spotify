@@ -1,0 +1,16 @@
+.app {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+}
+
+.main {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+
+  height: 100vh;
+  background: #121212;
+}
